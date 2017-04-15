@@ -30,6 +30,11 @@ try {
     include APP_PATH . '/config/loader.php';
 
     /**
+     * Include common functions
+     */
+    require APP_PATH.'/library/Common/function.php';
+
+    /**
      * Handle the request
      */
     $application = new \Phalcon\Mvc\Application($di);

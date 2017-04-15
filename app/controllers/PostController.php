@@ -19,8 +19,11 @@ class PostController extends ControllerBase
             $data['state'] = 1;
             $data['create_at'] = date('Y-m-d H:i:s',$now);
             $data['update_at'] = date('Y-m-d H:i:s',$now);
-            $res = $this->articles->save($data);
-            echo '<pre>';var_dump($res);exit;
+            $result = $this->articles->save($data);
+            if($result){
+                $this->returnAjaxJson(true,'发表成功','',$this->url->get("/"));
+            }
+            $this->returnAjaxJson(false,'发表失败');
         }
         $this->tag->prependTitle("New Post - ");
     }

@@ -18,7 +18,7 @@
             <a class="item" href='/Post/new'>
               <i class="grid layout icon"></i> New Post
             </a>
-            <a class="item">
+            <!-- <a class="item">
               <i class="mail icon"></i> Messages
             </a>
             <div class="ui simple dropdown item">
@@ -29,10 +29,10 @@
                 <a class="item"><i class="globe icon"></i> Choose Language</a>
                 <a class="item"><i class="settings icon"></i> Account Settings</a>
               </div>
-            </div>
-            <div class="right item">
+            </div> -->
+            <!-- <div class="right item">
               <div class="ui input"><input type="text" placeholder="Search..."></div>
-            </div>
+            </div> -->
           </div>
         </div>
         {% endblock %}

@@ -31,7 +31,7 @@
     </div>
     <div class="ui divider"></div>
     <p>
-        {{ tag.linkTo(['JavaScript:;','新增','class':'ui primary button','id':'new']) }}
+        {{ tag.linkTo(['JavaScript:;','发布','class':'ui primary button','id':'new']) }}
     </p>
 </form>
 <div class="ui divider"></div>
@@ -64,7 +64,8 @@
         $('#body').on('froalaEditor.contentChanged froalaEditor.initialized', function (e, editor) {
             $('#preview').html(editor.html.get());
         }).froalaEditor({
-          language: 'zh_cn'
+          language: 'zh_cn',
+          height:'200px',
         });
     });
 
@@ -74,7 +75,11 @@
             type: "post",
             data: $("#postForm").serialize(),
             success: function( result ) {
-                alert(result);
+                if(result.state){
+                    window.location.href = result.link;
+                }else{
+                    alert(result.msg);
+                }
             }
         });
     });

@@ -2,50 +2,21 @@
 
 {% block content %}
 <div class="ui items">
+    <?php foreach ($page->items as $item) { ?>
     <div class="item">
         <div class="content">
-            <a class="header">Cute Dog</a>
+            <a class="header"><?php echo $item->title; ?></a>
             <div class="description">
-            {{ image("/img/short-paragraph.png") }}
-            {{ image("/img/short-paragraph.png") }}
+            <?php echo htmlspecialchars_decode($item->body); ?>
             </div>
-            <div class="extra"><i class="green check icon"></i> 121 Votes </div>
+            <div class="extra"><i class="black unhide icon"></i> 121 Votes </div>
         </div>
     </div>
-    <div class="item">
-        <div class="content">
-            <a class="header">Cute Dog</a>
-            <div class="description">
-            {{ image("/img/short-paragraph.png") }}
-            {{ image("/img/short-paragraph.png") }}
-            </div>
-            <div class="extra"><i class="green check icon"></i> 121 Votes </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="content">
-            <a class="header">Cute Dog</a>
-            <div class="description">
-            {{ image("/img/short-paragraph.png") }}
-            {{ image("/img/short-paragraph.png") }}
-            </div>
-            <div class="extra"><i class="green check icon"></i> 121 Votes </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="content">
-            <a class="header">Cute Dog</a>
-            <div class="description">
-            {{ image("/img/short-paragraph.png") }}
-            {{ image("/img/short-paragraph.png") }}
-            </div>
-            <div class="extra"><i class="green check icon"></i> 121 Votes </div>
-        </div>
-    </div>
+    <?php } ?>
     <div class="ui large buttons center">
-        <button class="ui button">&larr;</button>
+        <a class="ui button" href="?page=<?php echo $page->before; ?>">&larr;</a>
         <div class="or"></div>
-        <button class="ui button">&rarr;</button>
+        <a class="ui button" href="?page=<?php echo $page->next; ?>">&rarr;</a>
     </div>
 </div>
 {% endblock %}

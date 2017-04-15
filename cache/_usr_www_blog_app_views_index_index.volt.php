@@ -18,7 +18,7 @@
             <a class="item" href='/Post/new'>
               <i class="grid layout icon"></i> New Post
             </a>
-            <a class="item">
+            <!-- <a class="item">
               <i class="mail icon"></i> Messages
             </a>
             <div class="ui simple dropdown item">
@@ -29,10 +29,10 @@
                 <a class="item"><i class="globe icon"></i> Choose Language</a>
                 <a class="item"><i class="settings icon"></i> Account Settings</a>
               </div>
-            </div>
-            <div class="right item">
+            </div> -->
+            <!-- <div class="right item">
               <div class="ui input"><input type="text" placeholder="Search..."></div>
-            </div>
+            </div> -->
           </div>
         </div>
         
@@ -40,50 +40,21 @@
         <div class="ui raised very padded text container segment">
             
 <div class="ui items">
+    <?php foreach ($page->items as $item) { ?>
     <div class="item">
         <div class="content">
-            <a class="header">Cute Dog</a>
+            <a class="header"><?php echo $item->title; ?></a>
             <div class="description">
-            <?= $this->tag->image(['/img/short-paragraph.png']) ?>
-            <?= $this->tag->image(['/img/short-paragraph.png']) ?>
+            <?php echo htmlspecialchars_decode($item->body); ?>
             </div>
-            <div class="extra"><i class="green check icon"></i> 121 Votes </div>
+            <div class="extra"><i class="black unhide icon"></i> 121 Votes </div>
         </div>
     </div>
-    <div class="item">
-        <div class="content">
-            <a class="header">Cute Dog</a>
-            <div class="description">
-            <?= $this->tag->image(['/img/short-paragraph.png']) ?>
-            <?= $this->tag->image(['/img/short-paragraph.png']) ?>
-            </div>
-            <div class="extra"><i class="green check icon"></i> 121 Votes </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="content">
-            <a class="header">Cute Dog</a>
-            <div class="description">
-            <?= $this->tag->image(['/img/short-paragraph.png']) ?>
-            <?= $this->tag->image(['/img/short-paragraph.png']) ?>
-            </div>
-            <div class="extra"><i class="green check icon"></i> 121 Votes </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="content">
-            <a class="header">Cute Dog</a>
-            <div class="description">
-            <?= $this->tag->image(['/img/short-paragraph.png']) ?>
-            <?= $this->tag->image(['/img/short-paragraph.png']) ?>
-            </div>
-            <div class="extra"><i class="green check icon"></i> 121 Votes </div>
-        </div>
-    </div>
+    <?php } ?>
     <div class="ui large buttons center">
-        <button class="ui button">&larr;</button>
+        <a class="ui button" href="?page=<?php echo $page->before; ?>">&larr;</a>
         <div class="or"></div>
-        <button class="ui button">&rarr;</button>
+        <a class="ui button" href="?page=<?php echo $page->next; ?>">&rarr;</a>
     </div>
 </div>
 

@@ -22,4 +22,24 @@ class ControllerBase extends Controller
             ->addJs("js/jquery-3.1.1.min.js")
             ->addJs("js/semantic.min.js");
     }
+
+    /**
+     * 返回json格式数据
+     * @param  boolean $state [状态]
+     * @param  string  $msg   [消息]
+     * @param  string  $data  [数据]
+     * @param  string  $link  [连接]
+     * @return [json]         [打印json格式数据]
+     */
+    public function returnAjaxJson($state = false, $msg = '', $data = '', $link = ''){
+        $res = [
+            'state' => isset($state) ? (bool)$state : false,
+            'msg' => isset($msg) ? (string)$msg : '',
+            'data' => isset($data) ? (array)$data : [],
+        ];
+        if(!empty($link)){
+            $res['link'] = $link;
+        }
+        returnAjaxJson($res);
+    }
 }

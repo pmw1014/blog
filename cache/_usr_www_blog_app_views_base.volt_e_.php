@@ -9,7 +9,7 @@ a:9:{i:0;s:319:"<?= $this->tag->getDoctype() ?>
         ";s:7:"headcss";N;i:1;s:32:"
     </head>
     <body>
-        ";s:8:"headmenu";a:1:{i:0;a:4:{s:4:"type";i:357;s:5:"value";s:1006:"
+        ";s:8:"headmenu";a:1:{i:0;a:4:{s:4:"type";i:357;s:5:"value";s:1024:"
         <div class="ui attached stackable menu">
           <div class="ui container">
             <a class="item" href="/">
@@ -18,7 +18,7 @@ a:9:{i:0;s:319:"<?= $this->tag->getDoctype() ?>
             <a class="item" href='/Post/new'>
               <i class="grid layout icon"></i> New Post
             </a>
-            <a class="item">
+            <!-- <a class="item">
               <i class="mail icon"></i> Messages
             </a>
             <div class="ui simple dropdown item">
@@ -29,10 +29,10 @@ a:9:{i:0;s:319:"<?= $this->tag->getDoctype() ?>
                 <a class="item"><i class="globe icon"></i> Choose Language</a>
                 <a class="item"><i class="settings icon"></i> Account Settings</a>
               </div>
-            </div>
-            <div class="right item">
+            </div> -->
+            <!-- <div class="right item">
               <div class="ui input"><input type="text" placeholder="Search..."></div>
-            </div>
+            </div> -->
           </div>
         </div>
         ";s:4:"file";s:33:"/usr/www/blog/app/views/base.volt";s:4:"line";i:38;}}i:2;s:81:"

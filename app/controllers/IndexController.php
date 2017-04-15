@@ -1,4 +1,5 @@
 <?php
+use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 class IndexController extends ControllerBase
 {
@@ -7,8 +8,22 @@ class IndexController extends ControllerBase
     }
 
     public function indexAction(){
-        echo '<pre>';var_dump(Articles::find()->toArray());exit;
+        $currentPage = $this->request->getQuery('page','int');
+
+        $articles = Articles::find();
+        $paginator = new PaginatorModel(
+            [
+                "data"  => $articles,
+                "limit" => 10,
+                "page"  => $currentPage,
+            ]
+        );
+
+        $page = $paginator->getPaginate();
+
         $this->tag->prependTitle("Home - ");
+
+        $this->view->page = $page;
     }
 
     public function show404Action(){
