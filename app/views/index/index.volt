@@ -5,11 +5,9 @@
     <?php foreach ($page->items as $item) { ?>
     <div class="item">
         <div class="content">
-            <a class="header"><?php echo $item->title; ?></a>
-            <div class="description">
-            <?php echo htmlspecialchars_decode($item->body); ?>
-            </div>
-            <div class="extra"><i class="black unhide icon"></i> 121 Votes </div>
+            <a class="header">{{ item.title }}</a>
+            <div class="description">{{ item.description }}</div>
+            <div class="extra"><i class="black unhide icon"></i> {{ item.viewed }} Votes </div>
         </div>
     </div>
     <?php } ?>

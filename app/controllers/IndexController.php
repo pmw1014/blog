@@ -30,4 +30,8 @@ class IndexController extends ControllerBase
         $this->tag->prependTitle("404 - ");
     }
 
+    public function testAction(){
+        $article = Articles::findFirst();
+    }
+
 }

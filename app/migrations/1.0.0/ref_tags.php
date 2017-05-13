@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class ArticlesMigration_100
+ * Class RefTagsMigration_100
  */
-class ArticlesMigration_100 extends Migration
+class RefTagsMigration_100 extends Migration
 {
     /**
      * Define the table structure
@@ -17,13 +17,12 @@ class ArticlesMigration_100 extends Migration
      */
     public function morph()
     {
-        $this->morphTable('articles', [
+        $this->morphTable('ref_tags', [
                 'columns' => [
                     new Column(
                         'id',
                         [
                             'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
                             'notNull' => true,
                             'autoIncrement' => true,
                             'size' => 11,
@@ -35,48 +34,17 @@ class ArticlesMigration_100 extends Migration
                         [
                             'type' => Column::TYPE_VARCHAR,
                             'default' => "",
-                            'notNull' => true,
-                            'size' => 100,
+                            'size' => 50,
                             'after' => 'id'
-                        ]
-                    ),
-                    new Column(
-                        'description',
-                        [
-                            'type' => Column::TYPE_VARCHAR,
-                            'default' => "",
-                            'notNull' => true,
-                            'size' => 200,
-                            'after' => 'title'
                         ]
                     ),
                     new Column(
                         'state',
                         [
                             'type' => Column::TYPE_INTEGER,
-                            'default' => "1",
-                            'size' => 1,
-                            'after' => 'description'
-                        ]
-                    ),
-                    new Column(
-                        'tags_id',
-                        [
-                            'type' => Column::TYPE_VARCHAR,
-                            'default' => "",
-                            'notNull' => true,
-                            'size' => 50,
-                            'after' => 'state'
-                        ]
-                    ),
-                    new Column(
-                        'viewed',
-                        [
-                            'type' => Column::TYPE_INTEGER,
                             'default' => "0",
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'tags_id'
+                            'size' => 1,
+                            'after' => 'title'
                         ]
                     ),
                     new Column(
@@ -84,9 +52,8 @@ class ArticlesMigration_100 extends Migration
                         [
                             'type' => Column::TYPE_DATETIME,
                             'default' => "2000-01-01 00:00:00",
-                            'notNull' => true,
                             'size' => 1,
-                            'after' => 'viewed'
+                            'after' => 'state'
                         ]
                     ),
                     new Column(
@@ -94,19 +61,17 @@ class ArticlesMigration_100 extends Migration
                         [
                             'type' => Column::TYPE_DATETIME,
                             'default' => "2000-01-01 00:00:00",
-                            'notNull' => true,
                             'size' => 1,
                             'after' => 'create_at'
                         ]
                     )
                 ],
                 'indexes' => [
-                    new Index('PRIMARY', ['id'], 'PRIMARY'),
-                    new Index('tags', ['tags_id'], null)
+                    new Index('PRIMARY', ['id'], 'PRIMARY')
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '3',
+                    'AUTO_INCREMENT' => '2',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8mb4_general_ci'
                 ],

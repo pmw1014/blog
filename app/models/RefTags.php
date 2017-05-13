@@ -1,6 +1,6 @@
 <?php
 
-class Articles extends \Phalcon\Mvc\Model
+class RefTags extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -15,16 +15,9 @@ class Articles extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=100, nullable=false)
+     * @Column(type="string", length=50, nullable=true)
      */
     public $title;
-
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=200, nullable=false)
-     */
-    public $description;
 
     /**
      *
@@ -36,21 +29,14 @@ class Articles extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
-     * @Column(type="string", length=50, nullable=false)
-     */
-    public $tags;
-
-    /**
-     *
-     * @var string
-     * @Column(type="string", nullable=false)
+     * @Column(type="string", nullable=true)
      */
     public $create_at;
 
     /**
      *
      * @var string
-     * @Column(type="string", nullable=false)
+     * @Column(type="string", nullable=true)
      */
     public $update_at;
 
@@ -60,18 +46,6 @@ class Articles extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("blog");
-
-        $this->hasOne(
-            'id',
-            'ArticleBody',
-            'articles_id'
-        );
-
-        $this->belongsTo(
-            'tags_id',
-            'RefTags',
-            'id'
-        );
     }
 
     /**
@@ -81,14 +55,14 @@ class Articles extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'articles';
+        return 'ref_tags';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Articles[]|Articles
+     * @return RefTags[]|RefTags
      */
     public static function find($parameters = null)
     {
@@ -99,7 +73,7 @@ class Articles extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Articles
+     * @return RefTags
      */
     public static function findFirst($parameters = null)
     {

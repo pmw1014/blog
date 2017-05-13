@@ -1,58 +1,28 @@
 <?php
 
-class Articles extends \Phalcon\Mvc\Model
+class ArticleBody extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var integer
-     * @Primary
-     * @Identity
      * @Column(type="integer", length=11, nullable=false)
      */
     public $id;
 
     /**
      *
-     * @var string
-     * @Column(type="string", length=100, nullable=false)
-     */
-    public $title;
-
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=200, nullable=false)
-     */
-    public $description;
-
-    /**
-     *
      * @var integer
-     * @Column(type="integer", length=1, nullable=true)
+     * @Column(type="integer", length=11, nullable=true)
      */
-    public $state;
+    public $a_id;
 
     /**
      *
      * @var string
-     * @Column(type="string", length=50, nullable=false)
+     * @Column(type="string", nullable=true)
      */
-    public $tags;
-
-    /**
-     *
-     * @var string
-     * @Column(type="string", nullable=false)
-     */
-    public $create_at;
-
-    /**
-     *
-     * @var string
-     * @Column(type="string", nullable=false)
-     */
-    public $update_at;
+    public $body;
 
     /**
      * Initialize method for model.
@@ -60,16 +30,9 @@ class Articles extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("blog");
-
-        $this->hasOne(
-            'id',
-            'ArticleBody',
-            'articles_id'
-        );
-
         $this->belongsTo(
-            'tags_id',
-            'RefTags',
+            'articles_id',
+            'Articles',
             'id'
         );
     }
@@ -81,14 +44,14 @@ class Articles extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'articles';
+        return 'article_body';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Articles[]|Articles
+     * @return ArticleBody[]|ArticleBody
      */
     public static function find($parameters = null)
     {
@@ -99,7 +62,7 @@ class Articles extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Articles
+     * @return ArticleBody
      */
     public static function findFirst($parameters = null)
     {

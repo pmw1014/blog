@@ -39,3 +39,7 @@
         ob_end_flush();
         fastcgi_finish_request();
     }
+
+    function my_mbsubstr($str,$start=0,$end=60,$encode='utf-8'){
+        return mb_substr($str,$start,$end,$encode);
+    }
