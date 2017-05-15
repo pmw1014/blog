@@ -27,19 +27,27 @@ class PostController extends ControllerBase
             $data['create_at'] = date('Y-m-d H:i:s',$now);
             $data['update_at'] = date('Y-m-d H:i:s',$now);
 
-            $articles->title = $data['title'];
-            $articles->description = $data['description'];
-            $articles->state = $data['state'];
-            $articles->tags_id = $data['tags_id'];
-            $articles->create_at = $data['create_at'];
-            $articles->update_at = $data['update_at'];
-
+            $articles->assign($data);
+            // $articles->setTitle = $data['title'];
+            // $articles->setDescription = $data['description'];
+            // $articles->setState = $data['state'];
+            // $articles->setTags_id = $data['tags_id'];
+            // $articles->setCreate_at = $data['create_at'];
+            // $articles->setUpdate_at = $data['update_at'];
+            //
             $articleBody->articles = $articles;
-            $articleBody->body = $body['body'];
+            // $articleBody->body = $body['body'];
 
-            $result = $articleBody->save();
+            // $result = $articleBody->save($body);
+            if ($articleBody->save($body) === false) {
+                $messages = $articleBody->getMessages();
 
-            if($result){
+                foreach ($messages as $message) {
+                    echo "Message: ", $message->getMessage();
+                    echo "Field: ", $message->getField();
+                    echo "Type: ", $message->getType();
+                }
+            }else{
                 $this->returnAjaxJson(true,'发表成功','',$this->url->get("/"));
             }
             $this->returnAjaxJson(false,'发表失败');
