@@ -10,7 +10,9 @@ class IndexController extends ControllerBase
     public function indexAction(){
         $currentPage = $this->request->getQuery('page','int');
 
-        $articles = Articles::find();
+        $map['conditions'] = 'state = ?1';
+        $map['bind'] = [1=>1];
+        $articles = Articles::find($map);
         $paginator = new PaginatorModel(
             [
                 "data"  => $articles,
@@ -31,7 +33,7 @@ class IndexController extends ControllerBase
     }
 
     public function testAction(){
-        $article = Articles::findFirst();
+        Articles::findFirst()->delete();
     }
 
 }

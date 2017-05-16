@@ -2,9 +2,11 @@
 use Phalcon\Di\FactoryDefault;
 
 error_reporting(E_ALL);
-
+define('DS',DIRECTORY_SEPARATOR);
 define('BASE_PATH', dirname(__DIR__));
-define('APP_PATH', BASE_PATH . '/app');
+define('APP_PATH', BASE_PATH . DS .'app');
+define('LOG_PATH', APP_PATH . DS .'log');
+define('SQL_LOG', FALSE);//是否打开sql log
 
 try {
 

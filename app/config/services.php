@@ -8,6 +8,10 @@ use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
+use Phalcon\Logger;
+use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Logger\Adapter\File as FileLogger;
+use Phalcon\Db\Profiler as ProfilerDb;
 
 /**
  * Shared configuration service
@@ -59,11 +63,48 @@ $di->setShared('view', function () {
     return $view;
 });
 
+$di->set(
+    "profiler",
+    function () {
+        return new ProfilerDb();
+    },
+    true
+);
+
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
 $di->setShared('db', function () {
     $config = $this->getConfig();
+
+    $eventsManager = new EventsManager();
+
+    $logger = $this->getLogger('DB');
+
+    // Get a shared instance of the DbProfiler
+    $profiler = $this->getProfiler();
+
+    // Listen all the database events
+    $eventsManager->attach(
+        "db",
+        function ($event, $connection) use ($config,$logger,$profiler) {
+            if($event->getType() === 'beforeQuery'){
+                $profiler->startProfile(
+                    $connection->getSQLStatement()
+                );
+                if(SQL_LOG){
+                    $logger->log(
+                        $connection->getSQLStatement(),
+                        Logger::INFO
+                    );
+                }
+            }
+
+            if ($event->getType() === "afterQuery") {
+                $profiler->stopProfile();
+            }
+        }
+    );
 
     $class = 'Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
     $params = [
@@ -79,6 +120,9 @@ $di->setShared('db', function () {
     }
 
     $connection = new $class($params);
+
+    // Assign the eventsManager to the db adapter instance
+    $connection->setEventsManager($eventsManager);
 
     return $connection;
 });
@@ -145,4 +189,31 @@ $di->set(
         return $dispatcher;
     },
     true
+);
+
+
+/**
+ * Log writer
+ */
+$di->set(
+    'logger',
+    function($type = 'log'){
+        if ( is_dir(LOG_PATH) ) {
+            if ( !is_writable(LOG_PATH) ) {
+                header('HTTP/1.1 401 Log Path access denied.', TRUE, 401);
+                echo 'Log path access denied.';
+                exit(); // EXIT_ERROR
+            }
+        } else {
+            if (!mkdir(LOG_PATH, 0777, true)) {
+                header('HTTP/1.1 401 create  log path failed.', TRUE, 401);
+                echo 'Create log path failed .';
+                exit(); // EXIT_ERROR
+            }
+        }
+
+        $logFile = sprintf("%s/%s_%s.log", LOG_PATH, $type, date('Y_m_d'));
+        $logger = new FileLogger($logFile);
+        return $logger;
+    }
 );

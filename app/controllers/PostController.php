@@ -24,22 +24,11 @@ class PostController extends ControllerBase
             $body['body'] = htmlspecialchars($body['body']);
             $data['state'] = 1;
             $data['tags_id'] = 1;
-            $data['create_at'] = date('Y-m-d H:i:s',$now);
-            $data['update_at'] = date('Y-m-d H:i:s',$now);
 
             $articles->assign($data);
-            // $articles->setTitle = $data['title'];
-            // $articles->setDescription = $data['description'];
-            // $articles->setState = $data['state'];
-            // $articles->setTags_id = $data['tags_id'];
-            // $articles->setCreate_at = $data['create_at'];
-            // $articles->setUpdate_at = $data['update_at'];
-            //
             $articleBody->articles = $articles;
-            // $articleBody->body = $body['body'];
 
-            // $result = $articleBody->save($body);
-            if ($articleBody->save($body) === false) {
+            if ($articleBody->create($body) === false) {
                 $messages = $articleBody->getMessages();
 
                 foreach ($messages as $message) {

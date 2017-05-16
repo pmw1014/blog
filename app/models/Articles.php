@@ -2,17 +2,20 @@
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Message;
-
+use Phalcon\Mvc\Model\Behavior\Timestampable;
+use Phalcon\Mvc\Model\Behavior\SoftDelete;
 
 class Articles extends Model
 {
+    const DELETED = 0;
+
     public function validation()
     {
-        if ($this->title === "Old") {
+        if (empty(trim($this->title))) {
             $message = new Message(
-                "Sorry, old robots are not allowed anymore",
+                "please enter the title",
                 "type",
-                "MyType"
+                "error"
             );
 
             $this->appendMessage($message);
@@ -30,240 +33,56 @@ class Articles extends Model
      * @Identity
      * @Column(type="integer", length=11, nullable=false)
      */
-    protected $id;
+    public $id;
 
     /**
      *
      * @var string
      * @Column(type="string", length=100, nullable=false)
      */
-    protected $title;
+    public $title;
 
     /**
      *
      * @var string
      * @Column(type="string", length=200, nullable=false)
      */
-    protected $description;
+    public $description;
 
     /**
      *
      * @var integer
      * @Column(type="integer", length=1, nullable=true)
      */
-    protected $state;
+    public $state;
 
     /**
      *
      * @var string
      * @Column(type="string", length=50, nullable=false)
      */
-    protected $tags_id;
+    public $tags_id;
 
     /**
      *
      * @var integer
      * @Column(type="integer", length=11, nullable=false)
      */
-    protected $viewed;
+    public $viewed;
 
     /**
      *
      * @var string
      * @Column(type="string", nullable=false)
      */
-    protected $create_at;
+    public $create_at;
 
     /**
      *
      * @var string
      * @Column(type="string", nullable=false)
      */
-    protected $update_at;
-
-    /**
-     * Method to set the value of field id
-     *
-     * @param integer $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field title
-     *
-     * @param string $title
-     * @return $this
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field description
-     *
-     * @param string $description
-     * @return $this
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field state
-     *
-     * @param integer $state
-     * @return $this
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field tags_id
-     *
-     * @param string $tags_id
-     * @return $this
-     */
-    public function setTagsId($tags_id)
-    {
-        $this->tags_id = $tags_id;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field viewed
-     *
-     * @param integer $viewed
-     * @return $this
-     */
-    public function setViewed($viewed)
-    {
-        $this->viewed = $viewed;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field create_at
-     *
-     * @param string $create_at
-     * @return $this
-     */
-    public function setCreateAt($create_at)
-    {
-        $this->create_at = $create_at;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field update_at
-     *
-     * @param string $update_at
-     * @return $this
-     */
-    public function setUpdateAt($update_at)
-    {
-        $this->update_at = $update_at;
-
-        return $this;
-    }
-
-    /**
-     * Returns the value of field id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Returns the value of field title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Returns the value of field description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Returns the value of field state
-     *
-     * @return integer
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * Returns the value of field tags_id
-     *
-     * @return string
-     */
-    public function getTagsId()
-    {
-        return $this->tags_id;
-    }
-
-    /**
-     * Returns the value of field viewed
-     *
-     * @return integer
-     */
-    public function getViewed()
-    {
-        return $this->viewed;
-    }
-
-    /**
-     * Returns the value of field create_at
-     *
-     * @return string
-     */
-    public function getCreateAt()
-    {
-        return $this->create_at;
-    }
-
-    /**
-     * Returns the value of field update_at
-     *
-     * @return string
-     */
-    public function getUpdateAt()
-    {
-        return $this->update_at;
-    }
+    public $update_at;
 
     /**
      * Initialize method for model.
@@ -282,6 +101,26 @@ class Articles extends Model
             'tags_id',
             'RefTags',
             'id'
+        );
+
+        $current_datetime = date('Y-m-d H:i:s');
+        $this->addBehavior(
+            new Timestampable(
+                [
+                    "beforeCreate" => [
+                        "field"  => ['create_at','update_at'],
+                        "format" => 'Y-m-d H:i:s'
+                    ]
+                ]
+            )
+        );
+        $this->addBehavior(
+            new SoftDelete(
+                [
+                    "field" => "state",
+                    "value" => self::DELETED,
+                ]
+            )
         );
     }
 
