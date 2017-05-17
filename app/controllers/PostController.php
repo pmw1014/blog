@@ -19,12 +19,13 @@ class PostController extends ControllerBase
 
             $now = time();
             $data['title'] = $this->request->getPost('title',['trim','striptags']);
-            $body['body'] = $this->request->getPost('body',['trim']);
+            $body['body'] = $this->request->getPost('body');
+            $data['cover'] = $this->takenCover($body['body']);
             $data['description'] = strip_tags(my_mbsubstr($body['body']));
             $body['body'] = htmlspecialchars($body['body']);
             $data['state'] = 1;
             $data['tags_id'] = 1;
-
+            
             $articles->assign($data);
             $articleBody->articles = $articles;
 
@@ -42,5 +43,13 @@ class PostController extends ControllerBase
             $this->returnAjaxJson(false,'发表失败');
         }
         $this->tag->prependTitle("New Post - ");
+    }
+
+    private function takenCover($body){
+        if(preg_match_all('/<img.*?src="(.*?)".*?>/is', $body, $matches)){
+            return $matches[1][0];
+        }else{
+            return '';
+        }
     }
 }

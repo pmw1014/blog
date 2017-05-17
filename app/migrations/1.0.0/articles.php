@@ -60,13 +60,22 @@ class ArticlesMigration_100 extends Migration
                         ]
                     ),
                     new Column(
+                        'cover',
+                        [
+                            'type' => Column::TYPE_VARCHAR,
+                            'default' => "",
+                            'size' => 200,
+                            'after' => 'state'
+                        ]
+                    ),
+                    new Column(
                         'tags_id',
                         [
                             'type' => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
                             'size' => 50,
-                            'after' => 'state'
+                            'after' => 'cover'
                         ]
                     ),
                     new Column(
@@ -106,7 +115,7 @@ class ArticlesMigration_100 extends Migration
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '3',
+                    'AUTO_INCREMENT' => '2',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8mb4_general_ci'
                 ],

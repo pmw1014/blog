@@ -10,7 +10,7 @@ class IndexController extends ControllerBase
     public function indexAction(){
         $currentPage = $this->request->getQuery('page','int');
 
-        $map['columns'] = 'title,description,viewed,update_at';
+        $map['columns'] = 'title,description,cover,viewed,update_at';
         $map['conditions'] = 'state = ?1';
         $map['bind'] = [1=>1];
         $articles = Articles::find($map);

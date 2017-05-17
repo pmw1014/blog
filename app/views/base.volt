@@ -17,7 +17,7 @@
             <a class="item" href='/Post/new'>
                 <i class="add to calendar icon"></i> New Post
             </a>
-            <a class="item" href="javascript:;">
+            <a class="item menu" href="javascript:;">
                 <i class="grid layout icon"></i> Menu
             </a>
             <!-- <a class="item">
@@ -66,7 +66,7 @@
             .sidebar({
             context: $('.article')
             })
-            .sidebar('attach events', '.menu .item')
+            .sidebar('attach events', '.menu .item.menu')
             ;
         </script>
         {% block footerjs %}{% endblock %}
