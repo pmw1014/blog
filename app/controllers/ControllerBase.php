@@ -14,6 +14,7 @@ class ControllerBase extends Controller
         // 添加本地CSS资源
         $headerCollection = $this->assets->collection("headerCss")
             ->setPrefix('/')
+            ->addCss("css/index.css")
             ->addCss("css/semantic.min.css");
 
         // 添加本地JavaScript资源

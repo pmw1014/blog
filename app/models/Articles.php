@@ -110,6 +110,10 @@ class Articles extends Model
                     "beforeCreate" => [
                         "field"  => ['create_at','update_at'],
                         "format" => 'Y-m-d H:i:s'
+                    ],
+                    'beforeUpdate' => [
+                        'field'  => ['update_at'],
+                        'format' => 'Y-m-d H:i:s'
                     ]
                 ]
             )

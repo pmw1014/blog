@@ -8,15 +8,17 @@
         {{ assets.outputCss('headerCss') }}
         {% block headcss %}{% endblock %}
     </head>
-    <body>
+    <body class="pushable">
         {% block headmenu %}
-        <div class="ui attached stackable menu">
-          <div class="ui container">
+        <div class="ui top attached demo menu">
             <a class="item" href="/">
-              <i class="home icon"></i> Home
+                <i class="home icon"></i> Home
             </a>
             <a class="item" href='/Post/new'>
-              <i class="grid layout icon"></i> New Post
+                <i class="add to calendar icon"></i> New Post
+            </a>
+            <a class="item" href="javascript:;">
+                <i class="grid layout icon"></i> Menu
             </a>
             <!-- <a class="item">
               <i class="mail icon"></i> Messages
@@ -33,15 +35,40 @@
             <!-- <div class="right item">
               <div class="ui input"><input type="text" placeholder="Search..."></div>
             </div> -->
-          </div>
         </div>
         {% endblock %}
+        <div class="pusher">
+            <div class="ui inverted labeled icon left inline vertical sidebar menu">
+                <div class="item">
+                  <div class="header">PHP</div>
+                  <div class="menu">
 
-        <div class="ui raised very padded text container segment">
-            {% block content %}<p>main page</p>{% endblock %}
+                      <a class="item" href="/introduction/integrations.html">PHP框架 </a>
+
+                      <a class="item" href="/introduction/build-tools.html">PHP技术 </a>
+
+                  </div>
+                </div>
+            </div>
+            <div class="article">
+                <div class="ui container">
+                    <div class="ui basic segment">
+                        {% block content %}<p>main page</p>{% endblock %}
+                    </div>
+                </div>
+            </div>
         </div>
-        {{ assets.outputJs("footerJs") }}
 
+        {{ assets.outputJs("footerJs") }}
+        <script>
+            // using context
+            $('.ui.sidebar')
+            .sidebar({
+            context: $('.article')
+            })
+            .sidebar('attach events', '.menu .item')
+            ;
+        </script>
         {% block footerjs %}{% endblock %}
     </body>
 </html>
