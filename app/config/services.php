@@ -12,6 +12,15 @@ use Phalcon\Logger;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Db\Profiler as ProfilerDb;
+use Phalcon\Mvc\Router;
+
+/**
+ * Registering a router
+ */
+$di->setShared('router', function () {
+    $router = new Router();
+    return $router;
+});
 
 /**
  * Shared configuration service

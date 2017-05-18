@@ -1,6 +1,6 @@
 <?php
 
-class RefTags extends \Phalcon\Mvc\Model
+class RefTags extends Base
 {
 
     /**

@@ -1,11 +1,9 @@
 <?php
 
-use Phalcon\Mvc\Model;
-use Phalcon\Mvc\Model\Message;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Mvc\Model\Behavior\SoftDelete;
 
-class Articles extends Model
+class Articles extends Base
 {
     const DELETED = 0;
 
@@ -14,12 +12,10 @@ class Articles extends Model
         if (empty(trim($this->title))) {
             $message = new Message(
                 "please enter the title",
-                "type",
-                "error"
+                "title",
+                "validate"
             );
-
             $this->appendMessage($message);
-
             return false;
         }
 
@@ -103,7 +99,6 @@ class Articles extends Model
             'id'
         );
 
-        $current_datetime = date('Y-m-d H:i:s');
         $this->addBehavior(
             new Timestampable(
                 [

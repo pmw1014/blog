@@ -25,22 +25,20 @@ class PostController extends ControllerBase
             $body['body'] = htmlspecialchars($body['body']);
             $data['state'] = 1;
             $data['tags_id'] = 1;
-            
+
             $articles->assign($data);
             $articleBody->articles = $articles;
 
             if ($articleBody->create($body) === false) {
                 $messages = $articleBody->getMessages();
-
+                $error = '';
                 foreach ($messages as $message) {
-                    echo "Message: ", $message->getMessage();
-                    echo "Field: ", $message->getField();
-                    echo "Type: ", $message->getType();
+                    $error .= $message;
                 }
+                $this->returnAjaxJson(false,'发表失败：'.$error);
             }else{
                 $this->returnAjaxJson(true,'发表成功','',$this->url->get("/"));
             }
-            $this->returnAjaxJson(false,'发表失败');
         }
         $this->tag->prependTitle("New Post - ");
     }

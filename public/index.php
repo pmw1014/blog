@@ -31,6 +31,8 @@ try {
      */
     include APP_PATH . '/config/loader.php';
 
+    include APP_PATH . '/config/router.php';
+
     /**
      * Include common functions
      */

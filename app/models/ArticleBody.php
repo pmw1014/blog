@@ -1,7 +1,22 @@
 <?php
 
-class ArticleBody extends \Phalcon\Mvc\Model
+class ArticleBody extends Base
 {
+
+    public function validation()
+    {
+        if (empty(trim($this->body))) {
+            $message = new Message(
+                "please enter the body",
+                "body",
+                "validate"
+            );
+            $this->appendMessage($message);
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      *

@@ -1,7 +1,7 @@
 <?php
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
-class IndexController extends ControllerBase
+class ArticleController extends ControllerBase
 {
     public function Initialize(){
         parent::Initialize();
@@ -19,6 +19,7 @@ class IndexController extends ControllerBase
                 "data"  => $articles,
                 "limit" => 10,
                 "page"  => $currentPage,
+                'order'  => 'id desc'
             ]
         );
 
@@ -31,12 +32,6 @@ class IndexController extends ControllerBase
 
     public function show404Action(){
         $this->tag->prependTitle("404 - ");
-    }
-
-    public function testAction(){
-        $article = Articles::findFirst();
-        $article->title = 'llll';
-        $article->save();
     }
 
 }
