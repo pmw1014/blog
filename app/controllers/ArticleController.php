@@ -10,7 +10,7 @@ class ArticleController extends ControllerBase
     public function indexAction(){
         $currentPage = $this->request->getQuery('page','int');
 
-        $map['columns'] = 'title,description,cover,viewed,update_at';
+        $map['columns'] = 'id,title,description,cover,viewed,update_at';
         $map['conditions'] = 'state = ?1';
         $map['bind'] = [1=>1];
         $articles = Articles::find($map);
@@ -24,14 +24,45 @@ class ArticleController extends ControllerBase
         );
 
         $page = $paginator->getPaginate();
+        if(!empty($page->items)){
+            foreach ($page->items as &$item) {
+                $item->link = $this->url->get(
+                    [
+                        'for' => 'detail',
+                        'id' => $item->id
+                    ]
+                );
+            }
+        }
 
         $this->tag->prependTitle("Home - ");
 
         $this->view->page = $page;
     }
 
-    public function show404Action(){
-        $this->tag->prependTitle("404 - ");
+    public function detailAction(){
+
+        $id = $this->dispatcher->getParam("id",'int');
+
+        $article = Articles::findFirst([
+            'state = ?1 and id = ?2',
+            'bind' => [
+                1 => 1,
+                2 => $id
+            ]
+        ]);
+
+        if(!$article){
+
+            $this->view->disable();
+            return $this->response->redirect('/show404/'.Errorcode::$code[404]['code']);
+        }else{
+            $articleWithBody = $article->articleBody;
+
+            $this->tag->prependTitle($article->title." - ");
+            $this->view->article = $article;
+            $this->view->body = htmlspecialchars_decode($articleWithBody->body);
+        }
     }
 
 }

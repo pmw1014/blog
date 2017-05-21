@@ -14,7 +14,7 @@
             <a class="item" href="/">
                 <i class="home icon"></i> Home
             </a>
-            <a class="item" href='/Post/new'>
+            <a class="item" href='{{ url("/post/new") }}'>
                 <i class="add to calendar icon"></i> New Post
             </a>
             <a class="item menu" href="javascript:;">

@@ -5,8 +5,6 @@ use Phalcon\Mvc\Model\Message;
 
 class Base extends Model
 {
-    public $k = '123';
-
 
     public function getMessages()
     {

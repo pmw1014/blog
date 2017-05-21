@@ -39,6 +39,11 @@ try {
     require APP_PATH.'/library/Common/function.php';
 
     /**
+     * Include Utils errorcode
+     */
+    require APP_PATH.'/library/Utils/errorcode.php';
+
+    /**
      * Handle the request
      */
     $application = new \Phalcon\Mvc\Application($di);

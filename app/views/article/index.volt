@@ -5,7 +5,7 @@
     <?php foreach ($page->items as $item) { ?>
     <div class="item">
         <div class="content">
-            <a class="header">{{ item.title }}</a>
+            <a class="header" href="{{ item.link }}">{{ item.title }}</a>
             <div class="description">{{ item.description }}</div>
 
             <?php if(!empty($item['cover'])){ ?>

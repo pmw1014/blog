@@ -185,7 +185,7 @@ $di->set(
                     case PhDispatcher::EXCEPTION_ACTION_NOT_FOUND:
                         $dispatcher->forward(
                             array(
-                                'controller' => 'index',
+                                'controller' => 'public',
                                 'action'     => 'show404',
                             )
                         );
