@@ -57,6 +57,11 @@ class ArticleController extends ControllerBase
             $this->view->disable();
             return $this->response->redirect('/show404/'.Errorcode::$code[404]['code']);
         }else{
+            //TODO: 增加浏览数
+            $article->viewed += 1;
+            $article->save();
+
+
             $articleWithBody = $article->articleBody;
 
             $this->tag->prependTitle($article->title." - ");

@@ -1,6 +1,8 @@
 <?php
 
-use Phalcon\Mvc\Dispatcher as PhDispatcher;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Mvc\Dispatcher as MvcDispatcher;
+use Phalcon\Mvc\Dispatcher\Exception as DispatchException;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\Url as UrlResolver;
@@ -8,11 +10,12 @@ use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
-use Phalcon\Logger;
+use Phalcon\Events\Event;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Db\Profiler as ProfilerDb;
 use Phalcon\Mvc\Router;
+use Phalcon\Logger;
 
 /**
  * Registering a router
@@ -170,35 +173,52 @@ $di->setShared('session', function () {
 /**
  * 404
  */
-$di->set(
-    'dispatcher',
-    function() use ($di) {
+ $di->setShared(
+     "dispatcher",
+     function () {
+         // 创建一个事件管理
+         $eventsManager = new EventsManager();
 
-        $evManager = $di->getShared('eventsManager');
+         // 附上一个侦听者
+         $eventsManager->attach(
+             "dispatch:beforeException",
+             function (Event $event, $dispatcher, Exception $exception) {
+                 // 处理404异常
+                 if ($exception instanceof DispatchException) {
+                     $dispatcher->forward(
+                         [
+                             "controller" => "public",
+                             "action"     => "show404",
+                         ]
+                     );
 
-        $evManager->attach(
-            "dispatch:beforeException",
-            function($event, $dispatcher, $exception)
-            {
-                switch ($exception->getCode()) {
-                    case PhDispatcher::EXCEPTION_HANDLER_NOT_FOUND:
-                    case PhDispatcher::EXCEPTION_ACTION_NOT_FOUND:
-                        $dispatcher->forward(
-                            array(
-                                'controller' => 'public',
-                                'action'     => 'show404',
-                            )
-                        );
-                        return false;
-                }
-            }
-        );
-        $dispatcher = new PhDispatcher();
-        $dispatcher->setEventsManager($evManager);
-        return $dispatcher;
-    },
-    true
-);
+                     return false;
+                 }
+
+                 // 代替控制器或者动作不存在时的路径
+                 switch ($exception->getCode()) {
+                     case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                     case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                         $dispatcher->forward(
+                             [
+                                 "controller" => "public",
+                                 "action"     => "show404",
+                             ]
+                         );
+
+                         return false;
+                 }
+             }
+         );
+
+         $dispatcher = new MvcDispatcher();
+
+         // 将EventsManager绑定到调度器
+         $dispatcher->setEventsManager($eventsManager);
+
+         return $dispatcher;
+     }
+ );
 
 
 /**
