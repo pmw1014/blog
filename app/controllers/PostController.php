@@ -14,6 +14,7 @@ class PostController extends ControllerBase
 
     public function newAction(){
         if($this->request->isAjax()){
+            sleep(5);
             $articles = new Articles();
             $articleBody = new ArticleBody();
 

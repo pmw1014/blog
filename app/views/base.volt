@@ -8,36 +8,21 @@
         {{ assets.outputCss('headerCss') }}
         {% block headcss %}{% endblock %}
     </head>
-    <body class="pushable">
+    <body>
         {% block headmenu %}
-        <div class="ui top attached demo menu">
+        <div class="ui top attached menu">
             <a class="item" href="/">
                 <i class="home icon"></i> Home
             </a>
             <a class="item" href='{{ url("/post/new") }}'>
                 <i class="add to calendar icon"></i> New Post
             </a>
-            <a class="item menu" href="javascript:;">
+            <a class="sidebar item menu" href="javascript:;">
                 <i class="grid layout icon"></i> Menu
             </a>
-            <!-- <a class="item">
-              <i class="mail icon"></i> Messages
-            </a>
-            <div class="ui simple dropdown item">
-              More
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                <a class="item"><i class="edit icon"></i> Edit Profile</a>
-                <a class="item"><i class="globe icon"></i> Choose Language</a>
-                <a class="item"><i class="settings icon"></i> Account Settings</a>
-              </div>
-            </div> -->
-            <!-- <div class="right item">
-              <div class="ui input"><input type="text" placeholder="Search..."></div>
-            </div> -->
         </div>
         {% endblock %}
-        <div class="pusher">
+        <div class="article">
             <div class="ui inverted labeled icon left inline vertical sidebar menu">
                 <div class="item">
                   <div class="header">PHP</div>
@@ -50,7 +35,7 @@
                   </div>
                 </div>
             </div>
-            <div class="article">
+            <div class="pusher">
                 <div class="ui container">
                     <div class="ui basic segment">
                         {% block content %}<p>main page</p>{% endblock %}
@@ -61,7 +46,6 @@
 
         {{ assets.outputJs("footerJs") }}
         <script>
-            // using context
             $('.ui.sidebar')
             .sidebar({
             context: $('.article')

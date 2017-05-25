@@ -2,13 +2,13 @@
 
 {% block headcss %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/js/froalaEditor/css/froala_editor.css">
-<link rel="stylesheet" href="/js/froalaEditor/css/froala_style.css">
-<link rel="stylesheet" href="/js/froalaEditor/css/plugins/code_view.css">
-<link rel="stylesheet" href="/js/froalaEditor/css/plugins/image_manager.css">
-<link rel="stylesheet" href="/js/froalaEditor/css/plugins/image.css">
-<link rel="stylesheet" href="/js/froalaEditor/css/plugins/table.css">
-<link rel="stylesheet" href="/js/froalaEditor/css/plugins/video.css">
+<link rel="stylesheet" href="/plugin/froalaEditor/css/froala_editor.css">
+<link rel="stylesheet" href="/plugin/froalaEditor/css/froala_style.css">
+<link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/code_view.css">
+<link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/image_manager.css">
+<link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/image.css">
+<link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/table.css">
+<link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/video.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 {% endblock %}
 
@@ -42,22 +42,22 @@
 {% block footerjs %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/froala_editor.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/align.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/code_beautifier.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/code_view.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/draggable.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/image.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/image_manager.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/link.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/lists.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/paragraph_format.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/paragraph_style.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/table.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/video.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/url.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/plugins/entities.min.js"></script>
-<script type="text/javascript" src="/js/froalaEditor/js/languages/zh_cn.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/froala_editor.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/align.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/code_beautifier.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/code_view.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/draggable.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/image.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/image_manager.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/link.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/lists.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/paragraph_format.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/paragraph_style.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/table.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/video.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/url.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/plugins/entities.min.js"></script>
+<script type="text/javascript" src="/plugin/froalaEditor/js/languages/zh_cn.js"></script>
 
 <script>
     $(function(){

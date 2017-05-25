@@ -17,11 +17,13 @@
         </div>
     </div>
     <?php } ?>
+    <?php if($page->total_pages > 1){ ?>
     <div class="ui large buttons center">
         <a class="ui button" href="?page=<?php echo $page->before; ?>">&larr;</a>
         <div class="or"></div>
         <a class="ui button" href="?page=<?php echo $page->next; ?>">&rarr;</a>
     </div>
+    <?php } ?>
 </div>
 {% endblock %}
 
