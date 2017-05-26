@@ -1,6 +1,3 @@
-{% extends "base.volt" %}
-
-{% block headcss %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/plugin/froalaEditor/css/froala_editor.css">
 <link rel="stylesheet" href="/plugin/froalaEditor/css/froala_style.css">
@@ -10,9 +7,7 @@
 <link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/table.css">
 <link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/video.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
-{% endblock %}
 
-{% block content %}
 <h2>
     New Post
 </h2>
@@ -37,9 +32,7 @@
 <div class="ui divider"></div>
 <div id="preview" class="fr-view"></div>
 </div>
-{% endblock %}
 
-{% block footerjs %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 <script type="text/javascript" src="/plugin/froalaEditor/js/froala_editor.min.js"></script>
@@ -68,20 +61,24 @@
           height:'200px',
         });
     });
-
     $("#new").click(function(){
-        $.ajax({
-            url: "/Post/new",
-            type: "post",
-            data: $("#postForm").serialize(),
-            success: function( result ) {
-                if(result.state){
-                    window.location.href = result.link;
-                }else{
-                    alert(result.msg);
+        Pace.track(function(){
+            $.ajax({
+                url: "/Post/new",
+                type: "post",
+                data: $("#postForm").serialize(),
+                beforeSend: function() {
+                },
+                success: function( result ) {
+                    if(result.state){
+                        window.location.href = result.link;
+                    }else{
+                        alert(result.msg);
+                    }
+                },
+                complete: function( result ){
                 }
-            }
+            });
         });
     });
 </script>
-{% endblock %}

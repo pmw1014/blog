@@ -10,11 +10,11 @@
     </head>
     <body>
         {% block headmenu %}
-        <div class="ui top attached menu">
-            <a class="item" href="/">
+        <div class="ui attached menu">
+            <a class="item" href="JavaScript:;" data-ajax='get' data-ajax-url='{{ url("/article/list") }}'>
                 <i class="home icon"></i> Home
             </a>
-            <a class="item" href='{{ url("/post/new") }}'>
+            <a class="item" href="JavaScript:;" data-ajax='get' data-ajax-url='{{ url("/post/new") }}'>
                 <i class="add to calendar icon"></i> New Post
             </a>
             <a class="sidebar item menu" href="javascript:;">
@@ -37,13 +37,15 @@
             </div>
             <div class="pusher">
                 <div class="ui container">
-                    <div class="ui basic segment">
+                    <div class="ui basic segment" id="content-wrapper">
                         {% block content %}<p>main page</p>{% endblock %}
                     </div>
                 </div>
             </div>
+            <div class="ui divider"></div>
+            <br/>
+            <br/>
         </div>
-
         {{ assets.outputJs("footerJs") }}
         <script>
             $('.ui.sidebar')
@@ -52,6 +54,21 @@
             })
             .sidebar('attach events', '.menu .item.menu')
             ;
+
+            $("a[data-ajax]").click(function(){
+                var _this = $(this),
+                    method = _this.data('ajax'),
+                    url   = _this.data('ajax-url');
+                    Pace.track(function(){
+                        $.ajax({
+                            url: url,
+                            type: method,
+                            success: function( result ) {
+                                $("#content-wrapper").html(result);
+                            }
+                        });
+                    });
+            });
         </script>
         {% block footerjs %}{% endblock %}
     </body>

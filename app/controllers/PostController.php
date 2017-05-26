@@ -13,8 +13,9 @@ class PostController extends ControllerBase
     }
 
     public function newAction(){
-        if($this->request->isAjax()){
-            sleep(5);
+        if($this->request->isGet()){
+            $this->tag->prependTitle("New Post - ");
+        }else if($this->request->isPost()){
             $articles = new Articles();
             $articleBody = new ArticleBody();
 
@@ -41,7 +42,6 @@ class PostController extends ControllerBase
                 $this->returnAjaxJson(true,'发表成功','',$this->url->get("/"));
             }
         }
-        $this->tag->prependTitle("New Post - ");
     }
 
     private function takenCover($body){

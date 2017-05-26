@@ -16,7 +16,7 @@ class ControllerBase extends Controller
             ->setPrefix('/')
             ->addCss("css/semantic.min.css")
             ->addCss("css/index.css")
-            ->addCss("plugin/pace/themes/blue/pace-theme-fill-left.css");
+            ->addCss("plugin/pace/dataurl.css");
 
         // 添加本地JavaScript资源
         $footerConllection = $this->assets->collection("footerJs")
