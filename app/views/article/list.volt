@@ -16,9 +16,9 @@
 <?php } ?>
 <?php if($page->total_pages > 1){ ?>
 <div class="ui large buttons center">
-    <a class="ui button" href="?page=<?php echo $page->before; ?>">&larr;</a>
+    <a class="ui button" href="JavaScript:;" data-ajax="get" data-ajax-url="/article/list?page=<?php echo $page->before; ?>">&larr;</a>
     <div class="or"></div>
-    <a class="ui button" href="?page=<?php echo $page->next; ?>">&rarr;</a>
+    <a class="ui button" data-ajax="get" data-ajax-url="/article/list?page=<?php echo $page->next; ?>">&rarr;</a>
 </div>
 <?php } ?>
 <script>

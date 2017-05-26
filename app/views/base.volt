@@ -55,7 +55,7 @@
             .sidebar('attach events', '.menu .item.menu')
             ;
 
-            $("a[data-ajax]").click(function(){
+            $('body').on('click','a[data-ajax]',function(){
                 var _this = $(this),
                     method = _this.data('ajax'),
                     url   = _this.data('ajax-url');
