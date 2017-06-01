@@ -8,6 +8,7 @@ use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
+use Phalcon\Mvc\Model\Manager as ModelsManager;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
 use Phalcon\Events\Event;
@@ -16,6 +17,13 @@ use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Db\Profiler as ProfilerDb;
 use Phalcon\Mvc\Router;
 use Phalcon\Logger;
+
+$di->set(
+    "modelsManager",
+    function() {
+        return new ModelsManager();
+    }
+);
 
 /**
  * Registering a router

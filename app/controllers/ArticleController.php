@@ -47,14 +47,16 @@ class ArticleController extends ControllerBase
     public function listAction()
     {
         if($this->request->isGet()){
-
             $currentPage = $this->request->get('page','int');
 
-            $map['columns'] = 'id,title,description,cover,viewed,update_at';
-            $map['conditions'] = 'state = ?1';
-            $map['bind'] = [1=>1];
-            $map['order'] = 'id desc';
-            $articles = Articles::find($map);
+            $articles = $this->modelsManager->createBuilder()
+                ->columns(['a.id','a.title','a.description','a.cover','a.viewed','a.update_at','t.title as tag_name','t.color as tag_color'])
+                ->from(['a' => 'Articles'])
+                ->join('RefTags','t.id = a.tag_id AND t.state = 1','t')
+                ->where('a.state = :state:',["state"=>1])
+                ->orderBy('a.id desc')
+                ->getQuery()
+                ->execute();
             $paginator = new PaginatorModel(
                 [
                     "data"  => $articles,
@@ -74,7 +76,6 @@ class ArticleController extends ControllerBase
                     );
                 }
             }
-
             $this->view->page = $page;
         }
     }

@@ -55,9 +55,9 @@ class Articles extends Base
     /**
      *
      * @var string
-     * @Column(type="string", length=50, nullable=false)
+     * @Column(type="integer", length=11, nullable=false)
      */
-    public $tags_id;
+    public $tag_id;
 
     /**
      *
@@ -94,7 +94,7 @@ class Articles extends Base
         );
 
         $this->belongsTo(
-            'tags_id',
+            'tag_id',
             'RefTags',
             'id'
         );

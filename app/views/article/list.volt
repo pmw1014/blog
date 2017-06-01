@@ -10,7 +10,8 @@
           <img src="{{ item.cover }}">
         </div>
         <?php } ?>
-        <div class="extra"><i class="black unhide icon"></i> {{ item.viewed }} Votes </div>
+        <div class="ui bottom right attached label">{{ item.viewed }} Votes </div>
+        <a class="ui {{ item.tag_color }} left ribbon label">{{ item.tag_name }}</a>
     </div>
 </div>
 <?php } ?>

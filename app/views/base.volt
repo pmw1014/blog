@@ -37,7 +37,7 @@
             </div>
             <div class="pusher">
                 <div class="ui container">
-                    <div class="ui basic segment" id="content-wrapper">
+                    <div id="content-wrapper">
                         {% block content %}<p>main page</p>{% endblock %}
                     </div>
                 </div>
