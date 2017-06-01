@@ -39,12 +39,21 @@ class RefTagsMigration_100 extends Migration
                         ]
                     ),
                     new Column(
+                        'color',
+                        [
+                            'type' => Column::TYPE_VARCHAR,
+                            'default' => "blue",
+                            'size' => 10,
+                            'after' => 'title'
+                        ]
+                    ),
+                    new Column(
                         'state',
                         [
                             'type' => Column::TYPE_INTEGER,
                             'default' => "0",
                             'size' => 1,
-                            'after' => 'title'
+                            'after' => 'color'
                         ]
                     ),
                     new Column(
@@ -71,7 +80,7 @@ class RefTagsMigration_100 extends Migration
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '2',
+                    'AUTO_INCREMENT' => '3',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8mb4_general_ci'
                 ],

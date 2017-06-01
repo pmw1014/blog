@@ -69,12 +69,12 @@ class ArticlesMigration_100 extends Migration
                         ]
                     ),
                     new Column(
-                        'tags_id',
+                        'tag_id',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'default' => "",
+                            'type' => Column::TYPE_INTEGER,
+                            'default' => "0",
                             'notNull' => true,
-                            'size' => 50,
+                            'size' => 11,
                             'after' => 'cover'
                         ]
                     ),
@@ -85,7 +85,7 @@ class ArticlesMigration_100 extends Migration
                             'default' => "0",
                             'notNull' => true,
                             'size' => 11,
-                            'after' => 'tags_id'
+                            'after' => 'tag_id'
                         ]
                     ),
                     new Column(
@@ -111,11 +111,11 @@ class ArticlesMigration_100 extends Migration
                 ],
                 'indexes' => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
-                    new Index('tags', ['tags_id'], null)
+                    new Index('tags', ['tag_id'], null)
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '2',
+                    'AUTO_INCREMENT' => '32',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8mb4_general_ci'
                 ],
