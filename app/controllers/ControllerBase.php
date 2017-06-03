@@ -13,14 +13,12 @@ class ControllerBase extends Controller
 
         // 添加本地CSS资源
         $headerCollection = $this->assets->collection("headerCss")
-            ->setPrefix('/')
             ->addCss("css/semantic.min.css")
             ->addCss("css/index.css")
             ->addCss("plugin/pace/dataurl.css");
 
         // 添加本地JavaScript资源
         $footerConllection = $this->assets->collection("footerJs")
-            ->setPrefix('/')
             ->addJs("js/jquery-3.1.1.min.js")
             ->addJs("js/semantic.min.js")
             ->addJs("plugin/pace/pace.min.js");

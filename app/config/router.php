@@ -1,5 +1,4 @@
 <?php
-
 // Create the router
 $router = $di->get("router");
 
@@ -15,19 +14,37 @@ $router->add(
     ]
 );
 
+//详情页
 $router->add(
     "/article/{id:[0-9]+}",
     "Article::detail"
 )->setName('detail');
 
+//文章添加页
 $router->add(
-    "/new",
-    [
-        "controller" => "post",
-        "action"     => "new",
-    ]
-);
+    "/add",
+    "Post::new"
+)->setName('add');
 
+//文章编辑页
+$router->add(
+    "/edit/{id:[0-9]+}",
+    "Post::edit"
+)->setName('edit');
+
+//文章编辑页
+$router->add(
+    "/save",
+    "Post::edit"
+)->setName('save');
+
+//详情页--ajax
+$router->add(
+    "/description/{id:[0-9]+}",
+    "Article::description"
+)->setName('description');
+
+//按栏目分类文章列表页
 $router->add(
     "/catalog/{id}",
     [
@@ -41,4 +58,8 @@ $router->add(
 $router->add(
     '/show404/{code:[0-9]+}',
     "Public::show404"
+);
+$router->add(
+    '/ajaxshow404/{code:[0-9]+}',
+    "Public::ajaxshow404"
 );

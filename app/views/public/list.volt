@@ -1,7 +1,8 @@
+
 <?php foreach ($page->items as $item) { ?>
 <div class="item ui segment">
     <div class="content">
-        <h2 class="ui dividing header"><a class="get-detail" href="JavaScript:;" data-id="{{ item.id }}">{{ item.title }}</a></h2>
+        <h2 class="ui dividing header"><a class="get-detail" href="JavaScript:;" data-ajax="get" data-ajax-url="/description/{{ item.id }}">{{ item.title }}</a></h2>
         <div class="description">
             <p>{{ item.description }}</p>
         </div>
@@ -11,7 +12,7 @@
         </div>
         <?php } ?>
         <div class="ui bottom right attached label">{{ item.viewed }} Votes </div>
-        <a class="ui {{ item.tag_color }} left ribbon label">{{ item.tag_name }}</a>
+        <a class="ui {{ item.tag_color }} left ribbon label" href="javascript:;">{{ item.tag_name }}</a>
     </div>
 </div>
 <?php } ?>
@@ -22,19 +23,3 @@
     <a class="ui button" data-ajax="get" data-ajax-url="/article/list?page=<?php echo $page->next; ?>">&rarr;</a>
 </div>
 <?php } ?>
-<script>
-$(".get-detail").click(function(){
-    var _this = $(this),
-        id    = _this.data('id');
-    Pace.track(function(){
-        $.ajax({
-            url: "/article/description",
-            type: "get",
-            data: {'id':id},
-            success: function( result ) {
-                $("#content-wrapper").html(result);
-            }
-        });
-    });
-});
-</script>

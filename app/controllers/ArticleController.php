@@ -29,7 +29,7 @@ class ArticleController extends ControllerBase
         if(!$article){
 
             $this->view->disable();
-            return $this->response->redirect('/show404/'.Errorcode::$code[404]['code']);
+            return $this->response->redirect('/show404/'.Errorcode::$codes[404]['code']);
         }else{
             //TODO: 增加浏览数
             $article->viewed += 1;
@@ -40,6 +40,8 @@ class ArticleController extends ControllerBase
 
             $this->tag->prependTitle($article->title." - ");
             $this->view->article = $article;
+            $this->view->tag = ['color'=>$article->RefTags->color,'title'=>$article->RefTags->title];
+            $this->view->catalog = ['title'=>$article->Catalogs->title];
             $this->view->body = htmlspecialchars_decode($articleWithBody->body);
         }
     }
@@ -70,20 +72,21 @@ class ArticleController extends ControllerBase
                 foreach ($page->items as &$item) {
                     $item->link = $this->url->get(
                         [
-                            'for' => 'detail',
+                            'for' => 'description',
                             'id' => $item->id
                         ]
                     );
                 }
             }
             $this->view->page = $page;
+            $this->view->pick("public/list");
         }
     }
 
     public function descriptionAction()
     {
         if($this->request->isGet()){
-            $id = $this->request->get("id",'int');
+            $id = $this->dispatcher->getParam("id",'int');
 
             $article = Articles::findFirst([
                 'state = ?1 and id = ?2',
@@ -96,7 +99,7 @@ class ArticleController extends ControllerBase
             if(!$article){
 
                 $this->view->disable();
-                return $this->response->redirect('/show404/'.Errorcode::$code[404]['code']);
+                return $this->response->redirect('/ajaxshow404/'.Errorcode::$codes[404]['code']);
             }else{
                 //TODO: 增加浏览数
                 $article->viewed += 1;
@@ -104,10 +107,17 @@ class ArticleController extends ControllerBase
 
 
                 $articleWithBody = $article->articleBody;
-
                 $this->tag->prependTitle($article->title." - ");
                 $this->view->article = $article;
+                $this->view->tag = ['color'=>$article->RefTags->color,'title'=>$article->RefTags->title];
+                $this->view->catalog = ['title'=>$article->Catalogs->title];
                 $this->view->body = htmlspecialchars_decode($articleWithBody->body);
+                $this->view->edit_link = $this->url->get(
+                    [
+                        'for' => 'edit',
+                        'id'  => $id
+                    ]
+                );
             }
         }
     }

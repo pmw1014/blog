@@ -12,6 +12,84 @@ class PostController extends ControllerBase
         parent::Initialize();
     }
 
+
+    public function editAction(){
+
+        if($this->request->isGet()){
+            $id = $this->dispatcher->getParam("id",'int');
+
+            //TODO: 获取tag
+            $tags = $this->modelsManager->createBuilder()
+                ->columns(['id','title','color'])
+                ->from('RefTags')
+                ->where('state = :state:',["state"=>1])
+                ->orderBy('id desc')
+                ->getQuery()
+                ->execute()
+                ->toArray();
+            $this->view->tags = $tags;
+
+            //TODO: 获取栏目
+            $catalogs = $this->modelsManager->createBuilder()
+                ->columns(['id','title'])
+                ->from('Catalogs')
+                ->where('state = :state: AND parent_id != :parent_id:',["state"=>1,'parent_id'=>0])
+                ->orderBy('id desc')
+                ->getQuery()
+                ->execute()
+                ->toArray();
+            $this->view->catalogs = $catalogs;
+
+            $article = Articles::findFirst([
+                'state = ?1 and id = ?2',
+                'bind' => [
+                    1 => 1,
+                    2 => $id
+                ]
+            ]);
+            $articleWithBody = $article->articleBody;
+            $this->tag->prependTitle('Edit '.$article->title." - ");
+
+            $this->view->article = $article;
+            $this->view->tag = ['id'=>$article->RefTags->id];
+            $this->view->catalog = ['id'=>$article->Catalogs->id];
+            $this->view->body = htmlspecialchars_decode($articleWithBody->body);
+            $this->view->action_link = $this->url->get(
+                [
+                    "for" => "save"
+                ]
+            );
+            $this->view->pick("post/new");
+        }else if($this->request->isPost()){
+
+            $id = $this->request->getPost('id',['int']);
+            $body = $this->request->getPost('body');
+            $article = Articles::findFirst($id);
+
+            $article->title = $this->request->getPost('title',['trim','striptags']);
+            $article->cover = $this->takenCover($body);
+            $article->description = strip_tags(my_mbsubstr($body));
+            $article->tag_id = $this->request->getPost('tag_id','int');
+            $article->catalog_id = $this->request->getPost('catalog_id','int');
+
+            $articleBody = $article->getArticleBody();
+            $articleBody->body = htmlspecialchars($body);
+
+            if ($articleBody->update() === false) {
+                $messages = $articles->getMessages();
+                $error = '';
+                foreach ($messages as $message) {
+                    $error .= $message;
+                }
+                $this->returnAjaxJson(false,'保存失败：'.$error);
+            }else{
+                $article->update();
+                $this->returnAjaxJson(true,'保存成功','',$this->url->get("/"));
+            }
+        }
+
+    }
+
     public function newAction(){
         if($this->request->isGet()){
             $this->tag->prependTitle("New Post - ");
@@ -38,11 +116,15 @@ class PostController extends ControllerBase
                 ->toArray();
             $this->view->catalogs = $catalogs;
 
+            $this->view->action_link = $this->url->get(
+                [
+                    'for' => 'add'
+                ]
+            );
+
         }else if($this->request->isPost()){
             $articles = new Articles();
             $articleBody = new ArticleBody();
-
-            $now = time();
             $data['title'] = $this->request->getPost('title',['trim','striptags']);
             $body['body'] = $this->request->getPost('body');
             $data['cover'] = $this->takenCover($body['body']);

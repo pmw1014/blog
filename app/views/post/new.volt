@@ -9,14 +9,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 
 <h2>
+    {% if article is defined %}
+    Edit -- {{ article.title }}
+    {% else %}
     New Post
+    {% endif %}
 </h2>
 
 <div class="ui form">
 <form id="postForm">
     <div class="ui sub header">选择标签</div>
     <div class="ui search selection dropdown">
-        <input type="hidden" name="tag_id">
+        <input type="hidden" name="tag_id" value="{% if tag is defined %}{{ tag['id'] }}{% endif %}">
         <i class="dropdown icon"></i>
         <div class="default text">选择标签</div>
         <div class="menu">
@@ -27,7 +31,7 @@
     </div>
     <div class="ui sub header">选择栏目</div>
     <div class="ui search selection dropdown">
-        <input type="hidden" name="catalog_id">
+        <input type="hidden" name="catalog_id" value="{% if catalog is defined %}{{ catalog['id'] }}{% endif %}">
         <i class="dropdown icon"></i>
         <div class="default text">选择栏目</div>
         <div class="menu">
@@ -39,17 +43,25 @@
     <div class="ui divider"></div>
     <div class="field">
         <label for="title"><i class="quote left icon"></i></label>
-        {{ textField(['title','placeholder':'请输入标题','id':'title']) }}
+        {% if article is defined %}
+            {{ textField(['title','placeholder':'请输入标题','id':'title','value':article.title]) }}
+        {% else %}
+            {{ textField(['title','placeholder':'请输入标题','id':'title']) }}
+        {% endif %}
     </div>
     <div class="ui divider"></div>
     <div class="field">
         <label for="body"><i class="quote right icon"></i></label>
-        <textarea id="body" name="body"></textarea>
-        </div>
+        <textarea id="body" name="body">
+        {% if body is defined %}{{ body }}{% endif %}</textarea>
     </div>
-    <div class="ui divider"></div>
     <p>
-        {{ tag.linkTo(['JavaScript:;','发布','class':'ui primary button','id':'new']) }}
+        {% if article is defined %}
+        <input type="hidden" name="id" value="{{ article.id }}">
+        <a class="ui primary button" id="new" href="JavaScript:;" ajax-url="{{ action_link }}">保存</a>
+        {% else %}
+        <a class="ui primary button" id="new" href="JavaScript:;" ajax-url="{{ action_link }}">发布</a>
+        {% endif %}
     </p>
 </form>
 <div class="ui divider"></div>
@@ -81,10 +93,12 @@
           height:'200px',
         });
     });
-    $("#new").click(function(){
+    $('body').on("click","#new",function(){
+        var _this = $(this),
+            url   = _this.attr('ajax-url');
         Pace.track(function(){
             $.ajax({
-                url: "/Post/new",
+                url: url,
                 type: "post",
                 data: $("#postForm").serialize(),
                 beforeSend: function() {

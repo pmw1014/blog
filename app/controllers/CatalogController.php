@@ -35,13 +35,14 @@ class CatalogController extends ControllerBase
                 foreach ($page->items as &$item) {
                     $item->link = $this->url->get(
                         [
-                            'for' => 'detail',
+                            'for' => 'description',
                             'id' => $item->id
                         ]
                     );
                 }
             }
             $this->view->page = $page;
+            $this->view->pick("public/list");
         }
     }
 

@@ -10,4 +10,12 @@ class PublicController extends ControllerBase
         $this->tag->prependTitle("404 - ");
     }
 
+    public function ajaxshow404Action(){
+        $code = $this->dispatcher->getParam("code",'int');
+        $label = isset(Errorcode::$codes[$code]['label']) ? Errorcode::$codes[$code]['label'] : '';
+        $this->tag->prependTitle("404 - ");
+
+        $this->view->label = $label;
+    }
+
 }
