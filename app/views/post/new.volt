@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/image.css">
 <link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/table.css">
 <link rel="stylesheet" href="/plugin/froalaEditor/css/plugins/video.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 
 <h2>
     {% if article is defined %}

@@ -1,8 +1,8 @@
-
+<link rel="stylesheet" href="/plugin/froalaEditor/css/froala_style.css">
 <div class="ui segment">
     <a class="ui green right corner label" data-ajax="get" data-ajax-url="{{ edit_link }}"><i class="write icon"></i></a>
     <h2 class="ui center aligned header">{{ article.title }}</h2>
-    <div>{{ body }}</div>
+    <div class="fr-view">{{ body }}</div>
     <p class="ui right aligned header">
         {% if tag is defined %}
         <a class="ui {{ tag['color'] }} tag label">{{ tag['title'] }}</a>
