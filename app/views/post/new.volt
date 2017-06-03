@@ -14,6 +14,29 @@
 
 <div class="ui form">
 <form id="postForm">
+    <div class="ui sub header">选择标签</div>
+    <div class="ui search selection dropdown">
+        <input type="hidden" name="tag_id">
+        <i class="dropdown icon"></i>
+        <div class="default text">选择标签</div>
+        <div class="menu">
+            {% for tag in tags %}
+            <div class="item" data-value="{{ tag['id'] }}"><i class="ui {{ tag['color']}} empty circular label"></i>{{ tag['title'] }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="ui sub header">选择栏目</div>
+    <div class="ui search selection dropdown">
+        <input type="hidden" name="catalog_id">
+        <i class="dropdown icon"></i>
+        <div class="default text">选择栏目</div>
+        <div class="menu">
+            {% for catalog in catalogs %}
+            <div class="item" data-value="{{ catalog['id'] }}">{{ catalog['title'] }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="ui divider"></div>
     <div class="field">
         <label for="title"><i class="quote left icon"></i></label>
         {{ textField(['title','placeholder':'请输入标题','id':'title']) }}
@@ -32,9 +55,6 @@
 <div class="ui divider"></div>
 <div id="preview" class="fr-view"></div>
 </div>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 <script type="text/javascript" src="/plugin/froalaEditor/js/froala_editor.min.js"></script>
 <script type="text/javascript" src="/plugin/froalaEditor/js/plugins/align.min.js"></script>
 <script type="text/javascript" src="/plugin/froalaEditor/js/plugins/code_beautifier.min.js"></script>
@@ -81,4 +101,5 @@
             });
         });
     });
+    $('.ui.selection.dropdown').dropdown();
 </script>

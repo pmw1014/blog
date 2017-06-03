@@ -79,13 +79,32 @@ class ArticlesMigration_100 extends Migration
                         ]
                     ),
                     new Column(
+                        'catalog_id',
+                        [
+                            'type' => Column::TYPE_INTEGER,
+                            'default' => "0",
+                            'size' => 11,
+                            'after' => 'tag_id'
+                        ]
+                    ),
+                    new Column(
+                        'user_id',
+                        [
+                            'type' => Column::TYPE_INTEGER,
+                            'default' => "0",
+                            'notNull' => true,
+                            'size' => 11,
+                            'after' => 'catalog_id'
+                        ]
+                    ),
+                    new Column(
                         'viewed',
                         [
                             'type' => Column::TYPE_INTEGER,
                             'default' => "0",
                             'notNull' => true,
                             'size' => 11,
-                            'after' => 'tag_id'
+                            'after' => 'user_id'
                         ]
                     ),
                     new Column(
@@ -111,7 +130,8 @@ class ArticlesMigration_100 extends Migration
                 ],
                 'indexes' => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
-                    new Index('tags', ['tag_id'], null)
+                    new Index('tags', ['tag_id'], null),
+                    new Index('menu_id', ['catalog_id'], null)
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',

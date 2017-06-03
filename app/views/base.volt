@@ -24,16 +24,16 @@
         {% endblock %}
         <div class="article">
             <div class="ui inverted labeled icon left inline vertical sidebar menu">
+                {% for catalog in catalogs %}
                 <div class="item">
-                  <div class="header">PHP</div>
+                  <div class="header">{{ catalog['title'] }}</div>
                   <div class="menu">
-
-                      <a class="item" href="/introduction/integrations.html">PHP框架 </a>
-
-                      <a class="item" href="/introduction/build-tools.html">PHP技术 </a>
-
+                      {% for subclass in catalog['subclass'] %}
+                      <a class="item" data-ajax="get" data-ajax-url="{{ subclass['url_link'] }}" data-ajax-menu="1" href="JavaScript:;">{{ subclass['title'] }} </a>
+                      {% endfor %}
                   </div>
                 </div>
+                {% endfor %}
             </div>
             <div class="pusher">
                 <div class="ui container">
@@ -65,6 +65,16 @@
                             type: method,
                             success: function( result ) {
                                 $("#content-wrapper").html(result);
+                                if(_this.data('ajax-menu')=="1"){
+                                    $('a[data-ajax-menu]').removeClass('active');
+                                    _this.addClass('active');
+
+                                    $('.ui.sidebar')
+                                    .sidebar({
+                                    context: $('.article')
+                                    })
+                                    .sidebar('hide');
+                                }
                             }
                         });
                     });

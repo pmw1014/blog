@@ -55,9 +55,30 @@ class Articles extends Base
     /**
      *
      * @var string
+     * @Column(type="string", length=200, nullable=true)
+     */
+    public $cover;
+
+    /**
+     *
+     * @var integer
      * @Column(type="integer", length=11, nullable=false)
      */
     public $tag_id;
+
+    /**
+     *
+     * @var integer
+     * @Column(type="integer", length=11, nullable=true)
+     */
+    public $catalog_id;
+
+    /**
+     *
+     * @var integer
+     * @Column(type="integer", length=11, nullable=false)
+     */
+    public $user_id;
 
     /**
      *
@@ -96,6 +117,12 @@ class Articles extends Base
         $this->belongsTo(
             'tag_id',
             'RefTags',
+            'id'
+        );
+
+        $this->belongsTo(
+            'catalog_id',
+            'Catalogs',
             'id'
         );
 

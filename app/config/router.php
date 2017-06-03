@@ -28,6 +28,15 @@ $router->add(
     ]
 );
 
+$router->add(
+    "/catalog/{id}",
+    [
+        "controller" => "catalog",
+        "action"     => "list",
+    ]
+)->setName('catalog');
+
+
 // Set 404 paths
 $router->add(
     '/show404/{code:[0-9]+}',

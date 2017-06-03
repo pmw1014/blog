@@ -15,6 +15,29 @@ class PostController extends ControllerBase
     public function newAction(){
         if($this->request->isGet()){
             $this->tag->prependTitle("New Post - ");
+
+            //TODO: 获取tag
+            $tags = $this->modelsManager->createBuilder()
+                ->columns(['id','title','color'])
+                ->from('RefTags')
+                ->where('state = :state:',["state"=>1])
+                ->orderBy('id desc')
+                ->getQuery()
+                ->execute()
+                ->toArray();
+            $this->view->tags = $tags;
+
+            //TODO: 获取栏目
+            $catalogs = $this->modelsManager->createBuilder()
+                ->columns(['id','title'])
+                ->from('Catalogs')
+                ->where('state = :state: AND parent_id != :parent_id:',["state"=>1,'parent_id'=>0])
+                ->orderBy('id desc')
+                ->getQuery()
+                ->execute()
+                ->toArray();
+            $this->view->catalogs = $catalogs;
+
         }else if($this->request->isPost()){
             $articles = new Articles();
             $articleBody = new ArticleBody();
@@ -25,8 +48,9 @@ class PostController extends ControllerBase
             $data['cover'] = $this->takenCover($body['body']);
             $data['description'] = strip_tags(my_mbsubstr($body['body']));
             $body['body'] = htmlspecialchars($body['body']);
+            $data['tag_id'] = $this->request->getPost('tag_id','int');
+            $data['catalog_id'] = $this->request->getPost('catalog_id','int');
             $data['state'] = 1;
-            $data['tags_id'] = 1;
 
             $articles->assign($data);
             $articleBody->articles = $articles;
