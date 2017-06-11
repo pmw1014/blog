@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
 <div class="ui segment">
+    <a class="ui green right corner label" data-ajax="get" data-ajax-url="{{ edit_link }}"><i class="write icon"></i></a>
     <h2 class="ui center aligned header">{{ article.title }}</h2>
     <div class="fr-view">{{ body }}</div>
     <p class="ui right aligned header">

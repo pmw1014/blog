@@ -53,6 +53,18 @@ $router->add(
     ]
 )->setName('catalog');
 
+//注册页
+$router->add(
+    "/register",
+    "Public::register"
+)->setName('register');
+
+//登录页
+$router->add(
+    "/login",
+    "Public::login"
+)->setName('login');
+
 
 // Set 404 paths
 $router->add(

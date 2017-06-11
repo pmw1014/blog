@@ -12,15 +12,44 @@ class ControllerBase extends Controller
         $this->tag->setTitle("BLOG");
 
         // 添加本地CSS资源
-        $headerCollection = $this->assets->collection("headerCss")
+        $this->assets->collection("headerCss")
             ->addCss("css/semantic.min.css")
             ->addCss("css/index.css")
             ->addCss("plugin/pace/dataurl.css");
 
         // 添加本地JavaScript资源
-        $footerConllection = $this->assets->collection("footerJs")
+        $this->assets->collection("footerJs")
             ->addJs("js/jquery-3.1.1.min.js")
             ->addJs("js/semantic.min.js")
+            ->addJs("plugin/pace/pace.min.js");
+
+
+        // 添加本地CSS资源
+        $this->assets->collection("loginCss")
+            ->addCss("/css/login/reset.css")
+            ->addCss("/css/login/site.css")
+            ->addCss("/css/login/container.css")
+            ->addCss("/css/login/grid.css")
+            ->addCss("/css/login/header.css")
+            ->addCss("/css/login/image.css")
+            ->addCss("/css/login/menu.css")
+            ->addCss("/css/login/divider.css")
+            ->addCss("/css/login/segment.css")
+            ->addCss("/css/login/form.css")
+            ->addCss("/css/login/input.css")
+            ->addCss("/css/login/button.css")
+            ->addCss("/css/login/list.css")
+            ->addCss("/css/login/message.css")
+            ->addCss("/css/login/icon.css")
+            ->addCss("plugin/pace/dataurl.css");
+
+        // 添加本地JavaScript资源
+        $this->assets->collection("loginJs")
+            ->addJs("js/jquery-3.1.1.min.js")
+            ->addJs("js/jquery.serialize-object.min.js")
+            ->addJs("js/semantic.min.js")
+            ->addJs("js/login/form.js")
+            ->addJs("js/login/transition.js")
             ->addJs("plugin/pace/pace.min.js");
 
         $this->view->catalogs = $this->getCatalogs();

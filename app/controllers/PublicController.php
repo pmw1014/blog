@@ -6,11 +6,23 @@ class PublicController extends ControllerBase
         parent::Initialize();
     }
 
-    public function show404Action(){
+    public function loginAction()
+    {
+        $this->tag->prependTitle("登录 - ");
+    }
+
+    public function registerAction()
+    {
+        $this->tag->prependTitle("注册 - ");
+    }
+
+    public function show404Action()
+    {
         $this->tag->prependTitle("404 - ");
     }
 
-    public function ajaxshow404Action(){
+    public function ajaxshow404Action()
+    {
         $code = $this->dispatcher->getParam("code",'int');
         $label = isset(Errorcode::$codes[$code]['label']) ? Errorcode::$codes[$code]['label'] : '';
         $this->tag->prependTitle("404 - ");

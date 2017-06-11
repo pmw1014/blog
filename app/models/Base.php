@@ -13,21 +13,21 @@ class Base extends Model
         foreach (parent::getMessages() as $message) {
             switch ($message->getType()) {
                 case "InvalidCreateAttempt":
-                    $messages[] = "The record cannot be created because it already exists | ";
+                    $messages[] = "不可新增已存在的数据";
                     break;
 
                 case "InvalidUpdateAttempt":
-                    $messages[] = "The record cannot be updated because it doesn't exist | ";
+                    $messages[] = "不可更新不存在的数据";
                     break;
 
                 case "PresenceOf":
-                    $messages[] = "The field " . $message->getField() . " is mandatory | ";
+                    $messages[] = "字段： " . $message->getField() . " 是必须的";
+                    break;
+                case 'Email':
+                    $messages[] = '请填入有效的邮箱地址';
                     break;
                 default:
-                    $msg = 'Message: '.$message->getMessage().' | ';
-                    $msg .= 'Field: '.$message->getField().' | ';
-                    $msg .= 'Type: '.$message->getType().' | ';
-                    $messages[] = $msg;
+                    $messages[] = $message->getMessage();
                     break;
             }
         }

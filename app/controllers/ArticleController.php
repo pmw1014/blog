@@ -43,6 +43,12 @@ class ArticleController extends ControllerBase
             $this->view->tag = ['color'=>$article->RefTags->color,'title'=>$article->RefTags->title];
             $this->view->catalog = ['title'=>$article->Catalogs->title];
             $this->view->body = htmlspecialchars_decode($articleWithBody->body);
+            $this->view->edit_link = $this->url->get(
+                [
+                    'for' => 'edit',
+                    'id'  => $id
+                ]
+            );
         }
     }
 
