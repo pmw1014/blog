@@ -38,7 +38,7 @@
                 <div class="field">
                   <div class="ui left icon input">
                     <i class="lock icon"></i>
-                    <input type="password" name="password" placeholder="请输入8~30字符">
+                    <input type="password" name="password" placeholder="密码请输入8~30字符">
                   </div>
                 </div>
                 <div class="ui fluid large teal submit button">注册</div>
@@ -47,6 +47,10 @@
               <div class="ui error message"></div>
 
             </form>
+
+            <div class="ui message">
+              New to us? <a href="{{ url("/login") }}">Login In</a>
+            </div>
           </div>
         </div>
         {{ assets.outputJs("loginJs") }}

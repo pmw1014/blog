@@ -8,6 +8,39 @@ class UserController extends ControllerBase
         parent::Initialize();
     }
 
+    public function loginAction()
+    {
+        if($this->request->isPost()){
+
+            if (!$this->security->checkToken()) {
+                $this->returnAjaxJson(false,'当前页面已过期','',$this->url->get("/login"));
+            }
+
+            $USER = new Users();
+            $USER->login = $this->request->getPost('email',['email','trim']);
+            $USER->password =  $this->request->getPost('password',['email','trim']);
+            $login = $USER->login();
+            if($login){
+
+                //session
+                $this->sessionUser->id = $login['id'];
+                $this->sessionUser->login = $login['login'];
+
+                $this->returnAjaxJson(true,'登录成功','',$this->url->get('/'));
+            }else{
+                $messages = $USER->getMessages();
+                $error = '<ul class=\'list\'>';
+                foreach ($messages as $message) {
+                    $error .= '<li>'.$message.'</li>';
+                }
+                $error .= '</ul>';
+                $e_data['tokenKey'] = $this->security->getTokenKey();
+                $e_data['token'] = $this->security->getToken();
+                $this->returnAjaxJson(false,$error,$e_data);
+            }
+        }
+    }
+
     public function regAction()
     {
         if($this->request->isPost()){
@@ -33,13 +66,11 @@ class UserController extends ControllerBase
                 $this->returnAjaxJson(false,$error,$e_data);
             }else{
                 $this->returnAjaxJson(true,'注册成功','',$this->url->get(
-                        [
-                            'for' => 'login'
-                        ]
-                    ));
+                    [
+                        'for' => 'login'
+                    ]
+                ));
             }
-
-            return json_encode($this->request->getPost());
         }
     }
 

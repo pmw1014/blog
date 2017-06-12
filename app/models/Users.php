@@ -14,9 +14,6 @@ class Users extends Base
     {
         $validator = new Validation();
 
-        $val_data['login'] = $this->login;
-        $val_data['password'] = $this->password;
-
         $validator->add(
             "login",
             new Email()
@@ -36,11 +33,38 @@ class Users extends Base
         return $this->validate($validator);
     }
 
-    public function beforeCreate()
+    public function login()
     {
-        //TODO: 判断该用户是否已存在
+        $row = $this->existUser();
+        if($row){
+            if (password_verify($this->password, $row['password'])) {
+                // Success - Now see if their password needs rehashed
+                if (password_needs_rehash($row['password'], self::HASH, ['cost' => self::COST])) {
+                    // We need to rehash the password, and save it. Just call setPassword
+                    $this->id = $row['id'];
+                    $this->created_at = $row['created_at'];
+                    $this->save();
+                }
+                $data['id'] = $row['id'];
+                $data['login'] = $row['login'];
+
+                return $data;
+            }else{
+                $message = new Message(
+                    "用户名或密码错误",
+                    "password",
+                    "LoginError"
+                );
+                $this->appendMessage($message);
+            }
+        }
+        return false;
+    }
+
+    public function existUser()
+    {
         $row = $this->modelsManager->createBuilder()
-            ->columns(['id'])
+            ->columns(['id','login','password','created_at'])
             ->from('Users')
             ->where('login = :login:',["login"=>$this->login])
             ->limit(1)
@@ -48,6 +72,34 @@ class Users extends Base
             ->execute()
             ->toArray();
         if(array_filter($row)){
+            return $row[0];
+        }else{
+            $message = new Message(
+                "当前用户不存在",
+                "login",
+                "NotExists"
+            );
+            $this->appendMessage($message);
+            return false;
+        }
+    }
+
+    public function setPwd()
+    {
+        if(!empty($this->password)){
+            $this->password = password_hash($this->password, self::HASH, ['cost' => self::COST]);
+        }
+    }
+
+    public function afterValidation()
+    {
+        $this->setPwd();
+    }
+
+    public function beforeCreate()
+    {
+        //TODO: 判断该用户是否已存在
+        if($this->existUser()){
             $message = new Message(
                 "当前用户已存在",
                 "login",
@@ -57,14 +109,6 @@ class Users extends Base
             return false;
         }
 
-        $this->password = password_hash($this->password, self::HASH, ['cost' => self::COST]);
-    }
-
-    public function beforeUpdate()
-    {
-        if(!empty($this->password)){
-            $this->password = password_hash($this->password, self::HASH, ['cost' => self::COST]);
-        }
     }
 
     /**
@@ -102,7 +146,7 @@ class Users extends Base
      * @var string
      * @Column(type="string", nullable=false)
      */
-    public $update_at;
+    public $updated_at;
 
     /**
      * Initialize method for model.
@@ -115,11 +159,11 @@ class Users extends Base
             new Timestampable(
                 [
                     "beforeCreate" => [
-                        "field"  => ['create_at','update_at'],
+                        "field"  => ['created_at','updated_at'],
                         "format" => 'Y-m-d H:i:s'
                     ],
                     'beforeUpdate' => [
-                        'field'  => ['update_at'],
+                        'field'  => ['updated_at'],
                         'format' => 'Y-m-d H:i:s'
                     ]
                 ]

@@ -2,14 +2,18 @@
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Tag;
+use Phalcon\Session\Bag as SessionBag;
 
 class ControllerBase extends Controller
 {
+    public $sessionUser = null;
     public function initialize()
     {
         $this->tag->setDoctype(Tag::HTML5);
 
         $this->tag->setTitle("BLOG");
+
+        $this->sessionUser = new SessionBag('user');
 
         // 添加本地CSS资源
         $this->assets->collection("headerCss")
