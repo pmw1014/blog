@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="/plugin/froalaEditor/css/froala_style.css">
 <div class="ui segment">
+    {% if edit == 1 %}
     <a class="ui green right corner label" data-ajax="get" data-ajax-url="{{ edit_link }}"><i class="write icon"></i></a>
+    {% endif %}
     <h2 class="ui center aligned header">{{ article.title }}</h2>
     <div class="fr-view">{{ body }}</div>
     <p class="ui right aligned header">

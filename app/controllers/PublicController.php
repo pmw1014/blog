@@ -1,4 +1,5 @@
 <?php
+use App\Library\Utils\Errorcode;
 
 class PublicController extends ControllerBase
 {

@@ -1,5 +1,6 @@
 <?php
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
+use App\Library\Utils\Errorcode;
 
 class ArticleController extends ControllerBase
 {
@@ -111,9 +112,16 @@ class ArticleController extends ControllerBase
                 $article->viewed += 1;
                 $article->save();
 
-
                 $articleWithBody = $article->articleBody;
                 $this->tag->prependTitle($article->title." - ");
+
+                if (isset($this->sessionUser->id) && $this->sessionUser->id > 0 && $article->user_id == $this->sessionUser->id) {
+                    $this->view->edit = 1;
+                }else{
+                    $this->view->edit = 0;
+                }
+
+
                 $this->view->article = $article;
                 $this->view->tag = ['color'=>$article->RefTags->color,'title'=>$article->RefTags->title];
                 $this->view->catalog = ['title'=>$article->Catalogs->title];

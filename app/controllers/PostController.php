@@ -1,8 +1,9 @@
 <?php
+use App\Library\Utils\Errorcode;
 
 class PostController extends ControllerBase
 {
-
+    private static $ActiveResource = 'Post';
     private $articles = '';
     private $articleBody = '';
 
@@ -14,6 +15,12 @@ class PostController extends ControllerBase
 
 
     public function editAction(){
+
+        // 验证权限
+        if (!$this->checkAccess($this->access,self::$ActiveResource,'edit')) {
+            $this->view->disable();
+            return $this->response->redirect('/ajaxshow404/'.Errorcode::$codes[401]['code']);
+        }
 
         if($this->request->isGet()){
             $id = $this->dispatcher->getParam("id",'int');
@@ -29,17 +36,6 @@ class PostController extends ControllerBase
                 ->toArray();
             $this->view->tags = $tags;
 
-            //TODO: 获取栏目
-            $catalogs = $this->modelsManager->createBuilder()
-                ->columns(['id','title'])
-                ->from('Catalogs')
-                ->where('state = :state: AND parent_id != :parent_id:',["state"=>1,'parent_id'=>0])
-                ->orderBy('id desc')
-                ->getQuery()
-                ->execute()
-                ->toArray();
-            $this->view->catalogs = $catalogs;
-
             $article = Articles::findFirst([
                 'state = ?1 and id = ?2',
                 'bind' => [
@@ -49,6 +45,12 @@ class PostController extends ControllerBase
             ]);
             $articleWithBody = $article->articleBody;
             $this->tag->prependTitle('Edit '.$article->title." - ");
+
+            if (isset($this->sessionUser->id) && $this->sessionUser->id > 0 && $article->user_id == $this->sessionUser->id) {
+                $this->view->edit = 1;
+            }else{
+                $this->view->edit = 0;
+            }
 
             $this->view->article = $article;
             $this->view->tag = ['id'=>$article->RefTags->id];

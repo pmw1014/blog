@@ -18,6 +18,13 @@ class Catalogs extends Base
 
     /**
      *
+     * @var integer
+     * @Column(type="integer", length=11, nullable=true)
+     */
+    public $user_id;
+
+    /**
+     *
      * @var string
      * @Column(type="string", length=20, nullable=false)
      */

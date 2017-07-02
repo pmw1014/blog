@@ -36,12 +36,7 @@ try {
     /**
      * Include common functions
      */
-    require APP_PATH.'/library/Common/function.php';
-
-    /**
-     * Include Utils errorcode
-     */
-    require APP_PATH.'/library/Utils/errorcode.php';
+    require_once APP_PATH . '/library/Common/function.php';
 
     /**
      * Handle the request

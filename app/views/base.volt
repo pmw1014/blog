@@ -11,14 +11,13 @@
     <body>
         {% block headmenu %}
         <div class="ui attached menu">
-            <a class="item" href="JavaScript:;" data-ajax='get' data-ajax-url='{{ url("/article/list") }}'>
-                <i class="home icon"></i> Home
+            {% for m in menu %}
+            <a class="item" href="JavaScript:;" data-ajax='get' data-ajax-url="{{ m['path'] }}">
+                <i class="{{ m['icon'] }} icon"></i> {{ m['title'] }}
             </a>
-            <a class="item" href="JavaScript:;" data-ajax='get' data-ajax-url='{{ url("/post/new") }}'>
-                <i class="add to calendar icon"></i> New Post
-            </a>
+            {% endfor %}
             <a class="sidebar item menu" href="javascript:;">
-                <i class="grid layout icon"></i> Menu
+                <i class="grid layout icon"></i> 菜单
             </a>
         </div>
         {% endblock %}

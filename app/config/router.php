@@ -12,7 +12,7 @@ $router->add(
         "controller" => "article",
         "action"     => "index",
     ]
-);
+)->setName('/');
 
 //详情页
 $router->add(
@@ -43,6 +43,15 @@ $router->add(
     "/description/{id:[0-9]+}",
     "Article::description"
 )->setName('description');
+
+//按栏目分类文章列表页
+$router->add(
+    "/list",
+    [
+        "controller" => "article",
+        "action"     => "list",
+    ]
+)->setName('list');
 
 //按栏目分类文章列表页
 $router->add(

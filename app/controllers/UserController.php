@@ -25,6 +25,7 @@ class UserController extends ControllerBase
                 //session
                 $this->sessionUser->id = $login['id'];
                 $this->sessionUser->login = $login['login'];
+                $this->sessionUser->access = 'Admins';
 
                 $this->returnAjaxJson(true,'登录成功','',$this->url->get('/'));
             }else{
