@@ -4,7 +4,8 @@ $loader = new \Phalcon\Loader();
 
 $loader->registerNamespaces(
     [
-       "App\\Library\\Utils"      => "../app/library/Utils/",
+        "App\\Models"      => "../app/models/",
+        "App\\Library\\Utils"      => "../app/library/Utils/",
     ]
 );
 

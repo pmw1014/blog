@@ -1,7 +1,8 @@
 <?php
-
+use App\Models\Base;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Mvc\Model\Behavior\SoftDelete;
+use Phalcon\Mvc\Model\Message;
 
 class Articles extends Base
 {
@@ -11,9 +12,9 @@ class Articles extends Base
     {
         if (empty(trim($this->title))) {
             $message = new Message(
-                "please enter the title",
+                "请输入标题",
                 "title",
-                "validate"
+                "field"
             );
             $this->appendMessage($message);
             return false;

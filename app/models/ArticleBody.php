@@ -1,4 +1,6 @@
 <?php
+use App\Models\Base;
+use Phalcon\Mvc\Model\Message;
 
 class ArticleBody extends Base
 {
@@ -7,9 +9,9 @@ class ArticleBody extends Base
     {
         if (empty(trim($this->body))) {
             $message = new Message(
-                "please enter the body",
+                "内容不得为空",
                 "body",
-                "validate"
+                "field"
             );
             $this->appendMessage($message);
             return false;

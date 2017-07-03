@@ -1,7 +1,8 @@
 <?php
-
+use App\Models\Base;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Mvc\Model\Behavior\SoftDelete;
+use Phalcon\Mvc\Model\Message;
 
 class Catalogs extends Base
 {

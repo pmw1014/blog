@@ -32,7 +32,7 @@ class UserController extends ControllerBase
                 $messages = $USER->getMessages();
                 $error = '<ul class=\'list\'>';
                 foreach ($messages as $message) {
-                    $error .= '<li>'.$message.'</li>';
+                    $error .= '<li>'.$message->getMessage().'</li>';
                 }
                 $error .= '</ul>';
                 $e_data['tokenKey'] = $this->security->getTokenKey();
@@ -59,7 +59,7 @@ class UserController extends ControllerBase
                 $messages = $USER->getMessages();
                 $error = '<ul class=\'list\'>';
                 foreach ($messages as $message) {
-                    $error .= '<li>'.$message.'</li>';
+                    $error .= '<li>'.$message->getMessage().'</li>';
                 }
                 $error .= '</ul>';
                 $e_data['tokenKey'] = $this->security->getTokenKey();

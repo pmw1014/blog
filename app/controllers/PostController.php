@@ -77,15 +77,16 @@ class PostController extends ControllerBase
             $articleBody = $article->getArticleBody();
             $articleBody->body = htmlspecialchars($body);
 
+            $articleBody->articles = $article;
+
             if ($articleBody->update() === false) {
-                $messages = $articles->getMessages();
+                $messages = $articleBody->getMessages();
                 $error = '';
                 foreach ($messages as $message) {
-                    $error .= $message;
+                    $error .= $message->getMessage();
                 }
                 $this->returnAjaxJson(false,'保存失败：'.$error);
             }else{
-                $article->update();
                 $this->returnAjaxJson(true,'保存成功','',$this->url->get("/"));
             }
         }
@@ -93,6 +94,13 @@ class PostController extends ControllerBase
     }
 
     public function newAction(){
+
+        // 验证权限
+        if (!$this->checkAccess($this->access,self::$ActiveResource,'create')) {
+            $this->view->disable();
+            return $this->response->redirect('/ajaxshow404/'.Errorcode::$codes[401]['code']);
+        }
+
         if($this->request->isGet()){
             $this->tag->prependTitle("New Post - ");
 
@@ -125,25 +133,25 @@ class PostController extends ControllerBase
             );
 
         }else if($this->request->isPost()){
-            $articles = new Articles();
+            $article = new Articles();
             $articleBody = new ArticleBody();
-            $data['title'] = $this->request->getPost('title',['trim','striptags']);
+            $article->title = $this->request->getPost('title',['trim','striptags']);
             $body['body'] = $this->request->getPost('body');
-            $data['cover'] = $this->takenCover($body['body']);
-            $data['description'] = strip_tags(my_mbsubstr($body['body']));
+            $article->cover = $this->takenCover($body['body']);
+            $article->description = strip_tags(my_mbsubstr($body['body']));
             $body['body'] = htmlspecialchars($body['body']);
-            $data['tag_id'] = $this->request->getPost('tag_id','int');
-            $data['catalog_id'] = $this->request->getPost('catalog_id','int');
-            $data['state'] = 1;
+            $article->tag_id = $this->request->getPost('tag_id','int');
+            $article->catalog_id = $this->request->getPost('catalog_id','int');
+            $article->state = 1;
 
-            $articles->assign($data);
-            $articleBody->articles = $articles;
+
+            $articleBody->articles = $article;
 
             if ($articleBody->create($body) === false) {
                 $messages = $articleBody->getMessages();
                 $error = '';
                 foreach ($messages as $message) {
-                    $error .= $message;
+                    $error .= $message->getMessage();
                 }
                 $this->returnAjaxJson(false,'发表失败：'.$error);
             }else{

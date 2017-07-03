@@ -63,7 +63,7 @@
         $.fn.api.settings.api = {
           'login in' : '/user/login',
         };
-
+            $("input[name='email']").focus();
           $(document)
             .ready(function() {
               $('.ui.form')

@@ -1,4 +1,6 @@
 <?php
+use App\Models\Base;
+use Phalcon\Mvc\Model\Message;
 
 class RefTags extends Base
 {

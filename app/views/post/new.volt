@@ -48,7 +48,6 @@
             {{ textField(['title','placeholder':'请输入标题','id':'title']) }}
         {% endif %}
     </div>
-    <div class="ui divider"></div>
     <div class="field">
         <label for="body"><i class="quote right icon"></i></label>
         <textarea id="body" name="body">

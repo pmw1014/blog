@@ -4,6 +4,7 @@ use Phalcon\Validation;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\StringLength;
 use Phalcon\Mvc\Model\Message;
+use App\Models\Base;
 
 class Users extends Base
 {
