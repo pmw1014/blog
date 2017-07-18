@@ -36,6 +36,17 @@ class PostController extends ControllerBase
                 ->toArray();
             $this->view->tags = $tags;
 
+            //TODO: 获取栏目
+            $catalogs = $this->modelsManager->createBuilder()
+                ->columns(['id','title'])
+                ->from('Catalogs')
+                ->where('state = :state: AND parent_id != :parent_id:',["state"=>1,'parent_id'=>0])
+                ->orderBy('id desc')
+                ->getQuery()
+                ->execute()
+                ->toArray();
+            $this->view->catalogs = $catalogs;
+
             $article = Articles::findFirst([
                 'state = ?1 and id = ?2',
                 'bind' => [
@@ -135,6 +146,7 @@ class PostController extends ControllerBase
         }else if($this->request->isPost()){
             $article = new Articles();
             $articleBody = new ArticleBody();
+            $article->user_id = $this->sessionUser->id;
             $article->title = $this->request->getPost('title',['trim','striptags']);
             $body['body'] = $this->request->getPost('body');
             $article->cover = $this->takenCover($body['body']);

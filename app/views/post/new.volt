@@ -83,6 +83,9 @@
 <script type="text/javascript" src="/plugin/froalaEditor/js/languages/zh_cn.js"></script>
 
 <script>
+    $.fn.api.settings.api = {
+        'post' : '{{ action_link }}',
+    };
     $(function(){
         $('#body').on('froalaEditor.contentChanged froalaEditor.initialized', function (e, editor) {
             $('#preview').html(editor.html.get());
@@ -91,27 +94,17 @@
           height:'200px',
         });
     });
-    $('body').on("click","#new",function(){
-        var _this = $(this),
-            url   = _this.attr('ajax-url');
-        Pace.track(function(){
-            $.ajax({
-                url: url,
-                type: "post",
-                data: $("#postForm").serialize(),
-                beforeSend: function() {
-                },
-                success: function( result ) {
-                    if(result.state){
-                        window.location.href = result.link;
-                    }else{
-                        alert(result.msg);
-                    }
-                },
-                complete: function( result ){
-                }
-            });
-        });
+    $('#postForm #new').api({
+        action: 'post',
+        method: 'POST',
+        serializeForm: true,
+        onSuccess: function(response) {
+            if(response.state){
+                window.location.href = response.link;
+            }else{
+                alert(response.msg);
+            }
+        }
     });
     $('.ui.selection.dropdown').dropdown();
 </script>

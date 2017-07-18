@@ -9,11 +9,17 @@ class PublicController extends ControllerBase
 
     public function loginAction()
     {
+        if (isset($this->sessionUser->id)) {
+            return $this->response->redirect('/');
+        }
         $this->tag->prependTitle("登录 - ");
     }
 
     public function registerAction()
     {
+        if (isset($this->sessionUser->id)) {
+            return $this->response->redirect('/');
+        }
         $this->tag->prependTitle("注册 - ");
     }
 
