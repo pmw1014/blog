@@ -11,7 +11,6 @@
           <img src="{{ item.cover }}">
         </div>
         <?php } ?>
-        <div class="ui bottom right attached label">{{ item.viewed }} Votes </div>
         <a class="ui {{ item.tag_color }} left ribbon label" href="javascript:;">{{ item.tag_name }}</a>
     </div>
 </div>
